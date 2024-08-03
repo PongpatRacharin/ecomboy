@@ -1,8 +1,10 @@
 package ecom.boy.service;
 
+import ecom.boy.Constant.CommonConstant;
 import ecom.boy.model.ECBUserdto;
 import ecom.boy.model.persistence.ECBUser;
 import ecom.boy.repository.LoginRepository;
+import ecom.boy.utility.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,4 +39,23 @@ public class LoginService {
         return ecbOBJ.mapForObject(results);
     }
 
+    public void saveUser(ECBUserdto userData){
+        try {
+            ECBUser dataForSave = new ECBUser();
+            dataForSave.setUsername(userData.getUsername());
+            dataForSave.setPassword(userData.getPassword());
+            dataForSave.setAddress(userData.getAddress());
+            dataForSave.setEmail(userData.getEmail());
+            dataForSave.setPermission(userData.getPermission());
+            dataForSave.setName(userData.getName());
+            dataForSave.setSnaem(userData.getSnaem());
+            dataForSave.setTel(userData.getTel());
+            loginRepository.save(dataForSave);
+            ECBUserdto ecbOBJ = new ECBUserdto();
+        }catch(BusinessException e){
+            throw new BusinessException(CommonConstant.STATUS_CODE_400,
+                    CommonConstant.ERR_INTERNAL_SERVER,
+                    CommonConstant.ERR_INTERNAL);
+        }
+    }
 }
