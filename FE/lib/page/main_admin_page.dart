@@ -221,7 +221,7 @@ class MainAdminPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text("table"),
+                        // Text("table"),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: DataTable(
