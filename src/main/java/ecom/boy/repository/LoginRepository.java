@@ -24,6 +24,7 @@ public interface LoginRepository extends JpaRepository<ECBUser, String> {
                 WHERE username = :username;
                 """)
     Map<String, Object> getAllUserByUserName(@Param("username") String username);
+
     //@Modifying udapte
     //@Transactional roll back transection
 }
