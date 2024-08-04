@@ -51,7 +51,6 @@ public class LoginService {
             dataForSave.setSnaem(userData.getSnaem());
             dataForSave.setTel(userData.getTel());
             loginRepository.save(dataForSave);
-            ECBUserdto ecbOBJ = new ECBUserdto();
         }catch(BusinessException e){
             throw new BusinessException(CommonConstant.STATUS_CODE_400,
                     CommonConstant.ERR_INTERNAL_SERVER,
