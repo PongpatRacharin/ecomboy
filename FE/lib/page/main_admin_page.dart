@@ -1,4 +1,5 @@
 import 'package:ecomboy/component/menu_button.dart';
+import 'package:ecomboy/component/menu_component.dart';
 import 'package:ecomboy/component/side_drawer.dart';
 import 'package:ecomboy/component/table.dart';
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
@@ -16,80 +17,74 @@ class MainAdminPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController userNameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
-    final double totalWidth = MediaQuery.of(context).size.width - 310 - 32 - 32;
+    final double totalWidth = MediaQuery.of(context).size.width;
+
+    double percentWidth(double percent) {
+      double ret;
+      ret = (totalWidth - 420 - 64) * percent;
+      return ret;
+    }
 
     return Consumer<InventoryProvider>(builder: (context, value, child) {
       List<DataColumn> _getColumn() {
         return <DataColumn>[
           // id
           DataColumn(
-            label: Expanded(
-              child: SizedBox(
-                width: totalWidth * 0.05,
-                child: Text(
-                  'ID',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+            label: Container(
+              width: percentWidth(0.05),
+              child: Text(
+                'ID',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           ),
           // username
           DataColumn(
-            label: Expanded(
-              child: SizedBox(
-                width: totalWidth * 0.25,
-                child: Text(
-                  'Username',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+            label: Container(
+              width: percentWidth(0.25),
+              child: Text(
+                'Username',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           ),
           // password
           DataColumn(
-            label: Expanded(
-              child: SizedBox(
-                width: totalWidth * 0.25,
-                child: Text(
-                  'Password',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+            label: Container(
+              width: percentWidth(0.25),
+              child: Text(
+                'Password',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           ),
           // email
           DataColumn(
-            label: Expanded(
-              child: SizedBox(
-                width: totalWidth * 0.25,
-                child: Text(
-                  'Email',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+            label: Container(
+              width: percentWidth(0.25),
+              child: Text(
+                'Email',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           ),
           // edit
           DataColumn(
-            label: Expanded(
-              child: SizedBox(
-                width: totalWidth * 0.05,
-                child: Text(
-                  'EDIT',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+            label: Container(
+              width: percentWidth(0.1),
+              child: Text(
+                'EDIT',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           ),
           // delete
           DataColumn(
-            label: Expanded(
-              child: SizedBox(
-                width: totalWidth * 0.05,
-                child: Text(
-                  'DELETE',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+            label: Container(
+              width: percentWidth(0.1),
+              child: Text(
+                'DELETE',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -105,7 +100,40 @@ class MainAdminPage extends StatelessWidget {
             DataCell(Text('email')),
             DataCell(Text('edit button')),
             DataCell(Text('delete button')),
-          ])
+          ]),
+          // dummy empty row
+          DataRow(cells: <DataCell>[
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+          ]),
+          DataRow(cells: <DataCell>[
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+          ]),
+          DataRow(cells: <DataCell>[
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+          ]),
+          DataRow(cells: <DataCell>[
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+            DataCell(Text('')),
+          ]),
         ];
       }
 
@@ -176,72 +204,34 @@ class MainAdminPage extends StatelessWidget {
             child: Row(
               children: [
                 // first column
-                Container(
-                  width: 310,
-                  height: double.infinity,
-                  color: Colors.white,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 32),
-                      // first page
-                      MenuButton(
-                          text: "menu",
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) => FirstPage())));
-                          }),
-                      const SizedBox(height: 8),
-                      // employee infomation
-                      MenuButton(
-                          text: "employ info",
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) => FirstPage())));
-                          }),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 2,
-                  height: double.infinity,
-                  color: Colors.black,
-                ),
+                const SideColumnWidget(),
+                const SideVerticalLine(),
                 Expanded(
                   child: Container(
                     width: double.infinity,
                     padding:
-                        EdgeInsets.symmetric(horizontal: 32, vertical: 128),
+                        EdgeInsets.symmetric(horizontal: 16, vertical: 128),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        // Text("table"),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: DataTable(
-                              columnSpacing: 16,
-                              border: TableBorder.all(
-                                  width: 1, color: Colors.black),
-                              columns: _getColumn(),
-                              rows: _getRow()),
-                        ),
+                        DataTable(
+                            columnSpacing: 16,
+                            border:
+                                TableBorder.all(width: 1, color: Colors.black),
+                            columns: _getColumn(),
+                            rows: _getRow()),
                         const SizedBox(
-                          height: 40,
+                          height: 35,
                         ),
                         GestureDetector(
                           onTap: () {},
                           child: Container(
-                            height: 30,
+                            height: 40,
                             width: 100,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
-                                color: Color.fromARGB(255, 67, 62, 139)),
+                                color: Color.fromARGB(255, 26, 13, 219)),
                             child: Center(
                               child: Text(
                                 "${value.commonTrans['addMember']}",

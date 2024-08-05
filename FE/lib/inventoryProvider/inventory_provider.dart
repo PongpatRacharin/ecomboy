@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ecomboy/api/inventory_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,5 +13,15 @@ class InventoryProvider with ChangeNotifier {
     final Map<String, dynamic> jsonMap = jsonDecode(jsonString);
     commonTrans = jsonMap.map((key, value) => MapEntry(key, value.toString()));
     notifyListeners();
+  }
+
+  Future loginAction(username, password) async {
+    String _tag = "loginAction";
+    try {
+      var result = await InventoryAPI().loginApi(username, password);
+      if (result['status'] == 'success') {}
+    } catch (e) {
+      debugPrint("$_tag: $e");
+    }
   }
 }

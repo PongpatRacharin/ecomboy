@@ -24,5 +24,11 @@
     "product": "สินค้า",
     "bestSell": "สินค้าขายดี",
     "normalSell": "สินค้าทั่วไป",
-    "addMember": "เพิ่มสมาชิก"
+    "addMember": "เพิ่มสมาชิก",
+    "tableId": "ID",
+    "tableUsername": "Username",
+    "tablePassword": "Password",
+    "tableEmail": "Email",
+    "tableEdit": "EDIT",
+    "tableDelete": "DELETE"
 }
