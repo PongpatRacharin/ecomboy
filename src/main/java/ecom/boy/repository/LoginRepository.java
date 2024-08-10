@@ -15,15 +15,34 @@ import java.util.Map;
 @Repository
 public interface LoginRepository extends JpaRepository<ECBUser, String> {
     @Query(nativeQuery = true, value = """
-                SELECT * FROM ECBUSER;
+                SELECT * FROM ecbuser;
                 """)
         List<Map<String, Object>> getAllUser();
 
     @Query(nativeQuery = true, value = """
-                SELECT * FROM ECBUSER
+                SELECT * FROM ecbuser;
+                """)
+    List<Map<String, Object>> getUserInfo();
+
+    @Query(nativeQuery = true, value = """
+                SELECT * FROM ecbuser
                 WHERE username = :username;
                 """)
     Map<String, Object> getAllUserByUserName(@Param("username") String username);
+
+    @Query(nativeQuery = true, value = """
+                SELECT * FROM ecbuser
+                WHERE userid = :userid;
+                """)
+    Map<String, Object> getAllUserByUserId(@Param("userid") int userid);
+
+    @Query(nativeQuery = true, value = """
+                SELECT * FROM ecbuser
+                WHERE username = :username
+                and password = :password;
+                """)
+    Map<String, Object> getUserAndPassword(@Param("username") String username, @Param("password") String password);
+
 
     //@Modifying udapte
     //@Transactional roll back transection
