@@ -56,12 +56,12 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
-//    @PostMapping(value = "/stock/updateitem", produces = "application/json")
-//    public ResponseEntity<CommonResponse<String>> updateItem(@RequestBody ECBItemadddto itemData) {
-//        itemService.updateItem(itemData.getitemcode(),itemData);
-//        CommonResponse<String> response = new CommonResponse<>();
-//        response.setCode(CommonConstant.STATUS_CODE_200);
-//        response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);
-//        return ResponseEntity.ok(response);
-
+    @PostMapping(value = "/stock/updateitem", produces = "application/json")
+    public ResponseEntity<CommonResponse<String>> updateItem(@RequestBody ECBItemupdatedto itemData) {
+        itemService.updateItem(itemData.getItemcode(), itemData);
+        CommonResponse<String> response = new CommonResponse<>();
+        response.setCode(CommonConstant.STATUS_CODE_200);
+        response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);
+        return ResponseEntity.ok(response);
+    }
 }

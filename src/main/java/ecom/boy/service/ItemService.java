@@ -1,11 +1,13 @@
 package ecom.boy.service;
 
 import ecom.boy.Constant.CommonConstant;
+import ecom.boy.utility.*;
 import ecom.boy.model.*;
 import ecom.boy.model.persistence.ECBItem;
 import ecom.boy.repository.ItemRepository;
 import ecom.boy.utility.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,16 +47,16 @@ public class ItemService {
     public void addItem(ECBItemdto itemdata){
         try {
             ECBItem dataforadd = new ECBItem();
-            // Count the current number of rows
-            long rowCount = itemRepository.count();
-
-            // Set the ID based on the row count + 1
-            itemdata.setItemid((int) (rowCount + 1));
-            itemdata.setItemcode(String.valueOf(rowCount + 1));
-
+//            // Count the current number of rows
+//            long rowCount = itemRepository.count();
+//
+//            // Set the ID based on the row count + 1
+//            itemdata.setItemid((int) (rowCount + 1));
+//            itemdata.setItemcode(String.valueOf(rowCount + 1));
+//itemdata.getItemcode()
             // Set the properties of dataforadd
             dataforadd.setItemid(itemdata.getItemid());
-            dataforadd.setItemcode(itemdata.getItemcode());
+            dataforadd.setItemcode(BaseUtility.itemcodegenerate());
             dataforadd.setItemname(itemdata.getItemname());
             dataforadd.setItemdetail(itemdata.getItemdetail());
             dataforadd.setItemtype(itemdata.getItemtype());
@@ -77,7 +79,7 @@ public class ItemService {
         return ecbOBJ.mapForObject(results);
     }
 
-    public void updateItem(int itemid, ECBItemadddto updatedItem) {
+    public void updateItem(String itemid, ECBItemupdatedto updatedItem) {
         try{
             ECBItem dataForupdate = itemRepository.getReferenceById(String.valueOf(itemid));
             dataForupdate.setItemname(updatedItem.getItemname());

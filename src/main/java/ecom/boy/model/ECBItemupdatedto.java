@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ECBItemupdatedto {
+    private String itemcode;
     private String itemname;
     private String itemdetail;
     private int  price;
-    private byte[] imagedata;
+    private String imagedata;
 }
