@@ -2,8 +2,9 @@ import 'package:ecomboy/component/menu_button.dart';
 import 'package:ecomboy/component/menu_component.dart';
 import 'package:ecomboy/component/side_drawer.dart';
 import 'package:ecomboy/component/table.dart';
+import 'package:ecomboy/component/top_app_bar.dart';
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
-import 'package:ecomboy/page/first_page.dart';
+import 'package:ecomboy/page/landing_page.dart';
 import 'package:ecomboy/page/register_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -138,66 +139,7 @@ class MainAdminPage extends StatelessWidget {
       }
 
       return Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: const Color.fromARGB(255, 43, 41, 41),
-            toolbarHeight: 70,
-            leading: Builder(builder: (context) {
-              return IconButton(
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-                icon: const Icon(Icons.menu),
-                color: Colors.white,
-              );
-            }),
-            title: Text(
-              "${value.commonTrans['title']}",
-              style: const TextStyle(fontSize: 40, color: Colors.white),
-            ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      height: 30,
-                      width: 160,
-                      child: TextFormField(
-                        textAlign: TextAlign.center,
-                        textAlignVertical: TextAlignVertical.center,
-                        decoration: InputDecoration(
-                            hintText: value.commonTrans['productSearchHint'],
-                            contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                            fillColor: Colors.white,
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(0),
-                            )),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        height: 30,
-                        width: 100,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: const Color.fromARGB(255, 17, 141, 23)),
-                        child: Center(
-                          child: Text(
-                            'Role',
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+          appBar: const TopAppBar(),
           drawer: const LeftDrawer(),
           body: Container(
             color: Color.fromARGB(255, 211, 211, 211),

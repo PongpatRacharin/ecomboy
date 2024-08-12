@@ -1,6 +1,8 @@
 import 'package:ecomboy/component/menu_button.dart';
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
-import 'package:ecomboy/page/first_page.dart';
+import 'package:ecomboy/page/add_or_edit_member_page.dart';
+import 'package:ecomboy/page/landing_page.dart';
+import 'package:ecomboy/page/item_detail_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +27,7 @@ class SideColumnWidget extends StatelessWidget {
                 text: "${value.commonTrans['menu_Main']}",
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: ((context) => FirstPage())));
+                      MaterialPageRoute(builder: ((context) => LandingPage())));
                 }),
             const SizedBox(height: 8),
             // employee infomation
@@ -33,7 +35,29 @@ class SideColumnWidget extends StatelessWidget {
                 text: "${value.commonTrans['menu_EmployeeInfo']}",
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: ((context) => FirstPage())));
+                      MaterialPageRoute(builder: ((context) => LandingPage())));
+                }),
+            // add or edit page
+            const SizedBox(height: 8),
+
+            MenuButton(
+                text: "${value.commonTrans['addMemberTitle']}",
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => const AddEditMemberPage())));
+                }),
+            // add or edit page
+            const SizedBox(height: 8),
+
+            MenuButton(
+                text: "${value.commonTrans['menu_ProductInfo']}",
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => const ItemDetailPage())));
                 }),
           ],
         ),

@@ -1,122 +1,84 @@
+import 'package:ecomboy/component/menu_button.dart';
+import 'package:ecomboy/component/menu_component.dart';
 import 'package:ecomboy/component/side_drawer.dart';
+import 'package:ecomboy/component/table.dart';
+import 'package:ecomboy/component/top_app_bar.dart';
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
+import 'package:ecomboy/page/landing_page.dart';
 import 'package:ecomboy/page/register_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class FirstPage extends StatelessWidget {
-  const FirstPage({super.key});
+class AddEditMemberPage extends StatelessWidget {
+  const AddEditMemberPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final TextEditingController userNameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
+    final double totalWidth = MediaQuery.of(context).size.width;
+
+    double percentWidth(double percent) {
+      double ret;
+      ret = (totalWidth - 420 - 64) * percent;
+      return ret;
+    }
 
     return Consumer<InventoryProvider>(builder: (context, value, child) {
       return Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: const Color.fromARGB(255, 43, 41, 41),
-            toolbarHeight: 70,
-            leading: Builder(builder: (context) {
-              return IconButton(
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-                icon: const Icon(Icons.menu),
-                color: Colors.white,
-              );
-            }),
-            title: Text(
-              "${value.commonTrans['title']}",
-              style: const TextStyle(fontSize: 40, color: Colors.white),
-            ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      height: 30,
-                      width: 160,
-                      child: TextFormField(
-                        textAlign: TextAlign.center,
-                        textAlignVertical: TextAlignVertical.center,
-                        decoration: InputDecoration(
-                            hintText: value.commonTrans['productSearchHint'],
-                            contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                            fillColor: Colors.white,
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(0),
-                            )),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        height: 30,
-                        width: 100,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: const Color.fromARGB(255, 17, 141, 23)),
-                        child: Center(
-                          child: Text(
-                            value.commonTrans['Login']!,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        height: 30,
-                        width: 100,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: const Color.fromARGB(255, 240, 142, 30)),
-                        child: Center(
-                          child: Text(
-                            value.commonTrans['SignUpButton']!,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
+          appBar: const TopAppBar(),
           drawer: const LeftDrawer(),
-          body: Container(
-            color: Color.fromARGB(255, 211, 211, 211),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
+          body: Consumer<InventoryProvider>(builder: (context, value, child) {
+            return Container(
+              color: Color.fromARGB(255, 211, 211, 211),
+              child: Row(
                 children: [
-                  const SizedBox(height: 8),
-                  // best sell
-                  BestSellProduct(),
-                  const SizedBox(height: 16),
-                  Container(
-                    height: 4,
-                    width: double.infinity,
-                    color: Colors.black,
+                  // first column
+                  const SideColumnWidget(),
+                  const SideVerticalLine(),
+                  Expanded(
+                    child: Container(
+                      width: double.infinity,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${value.commonTrans['EditMemberTitle']}",
+                            style: TextStyle(
+                                fontSize: 50, fontWeight: FontWeight.w600),
+                          ),
+                          const SizedBox(
+                            height: 35,
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              height: 40,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Color.fromARGB(255, 26, 13, 219)),
+                              child: Center(
+                                child: Text(
+                                  "${value.commonTrans['addMember']}",
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 16),
-                  // normal sell
-                  NormalSellProduct(),
                 ],
               ),
-            ),
-          ));
+            );
+          }));
     });
   }
 }

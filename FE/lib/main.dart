@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:ecomboy/page/first_page.dart';
+import 'package:ecomboy/page/landing_page.dart';
 import 'package:ecomboy/page/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(milliseconds: 200));
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const FirstPage()),
+      MaterialPageRoute(builder: (context) => const LandingPage()),
     );
   }
 

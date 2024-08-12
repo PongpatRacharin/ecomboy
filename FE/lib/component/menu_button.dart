@@ -10,9 +10,9 @@ class MenuButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 40,
+        // height: 40,
         width: 250,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
             color: const Color.fromARGB(255, 63, 64, 65),
             borderRadius: BorderRadius.circular(10),

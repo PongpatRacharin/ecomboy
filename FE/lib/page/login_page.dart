@@ -1,5 +1,5 @@
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
-import 'package:ecomboy/page/first_page.dart';
+import 'package:ecomboy/page/landing_page.dart';
 import 'package:ecomboy/page/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -118,7 +118,8 @@ class LoginPage extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const FirstPage()));
+                                      builder: (context) =>
+                                          const LandingPage()));
                             },
                             child: Container(
                               height: 30,
