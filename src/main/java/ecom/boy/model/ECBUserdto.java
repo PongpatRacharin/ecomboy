@@ -10,7 +10,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ECBUserdto {
-    private int userid;
+    private String userid;
     private String username;
     private String password;
     private String name;
@@ -22,7 +22,7 @@ public class ECBUserdto {
 
     public ECBUserdto mapForObject(Map<String, Object> mapValue){
         ECBUserdto result = new ECBUserdto();
-        result.setUserid((int)mapValue.get("userid"));
+        result.setUserid((String) mapValue.get("userid"));
         result.setUsername((String)mapValue.get("username"));
         result.setPassword((String)mapValue.get("password"));
         result.setName((String)mapValue.get("name"));

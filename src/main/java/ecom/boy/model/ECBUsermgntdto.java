@@ -10,7 +10,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ECBUsermgntdto {
-    private int userid;
+    private String userid;
     private String username;
     private String password;
     private String email;

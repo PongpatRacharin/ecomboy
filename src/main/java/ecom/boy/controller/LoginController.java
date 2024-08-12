@@ -57,7 +57,7 @@ public class LoginController {
 
     @PostMapping(value = "/user/update", produces = "application/json")
     public ResponseEntity<CommonResponse<String>> updateUser(@RequestBody ECBUserdto userData) {
-        loginService.updateUser(userData.getUserid(),userData);
+        loginService.updateUser(Integer.parseInt(userData.getUserid()),userData);
         CommonResponse<String> response = new CommonResponse<>();
         response.setCode(CommonConstant.STATUS_CODE_200);
         response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);

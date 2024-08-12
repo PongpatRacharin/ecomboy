@@ -25,7 +25,7 @@ public class LoginService {
         List<Map<String, Object>> results = loginRepository.getAllUser();
         return  results.stream()
                 .map(t -> new ECBUserdto(
-                        (int) t.get("userid"),
+                        String.format("%010d", (int) t.get("userid")),
                         (String) t.get("username"),
                         (String) t.get("password"),
                         (String) t.get("name"),
@@ -41,7 +41,7 @@ public class LoginService {
         List<Map<String, Object>> results = loginRepository.getUserInfo();
         return  results.stream()
                 .map(t -> new ECBUsermgntdto(
-                        (int) t.get("userid"),
+                        String.format("%010d", (int) t.get("userid")),
                         (String) t.get("username"),
                         (String) t.get("password"),
                         (String) t.get("email")))
