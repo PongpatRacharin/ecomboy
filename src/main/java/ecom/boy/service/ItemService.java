@@ -1,6 +1,8 @@
 package ecom.boy.service;
 
 import ecom.boy.Constant.CommonConstant;
+import ecom.boy.model.persistence.ECBBestsell;
+import ecom.boy.repository.BestsellerRepository;
 import ecom.boy.utility.*;
 import ecom.boy.model.*;
 import ecom.boy.model.persistence.ECBItem;
@@ -43,8 +45,8 @@ public class ItemService {
                         (int) t.get("balance")))
                 .collect(Collectors.toList());
     }
-    public List<ECBItemwiithbestsellerdto> getItemBestSeller(String itemcode){
-        List<Map<String, Object>> results = itemRepository.getAllItemBestSeller(itemcode);
+    public List<ECBItemwiithbestsellerdto> getItemBestSeller(){
+        List<Map<String, Object>> results = itemRepository.getAllItemBestSeller();
         return  results.stream()
                 .map(t -> new ECBItemwiithbestsellerdto(
                         (String) t.get("itemcode"),
@@ -53,6 +55,28 @@ public class ItemService {
                         (int) t.get("balance"),
                         (int) t.get("bestsellno")))
                 .collect(Collectors.toList());
+    }
+
+    public void addItemBestSeller(String itemcode){
+        try{
+            ECBBestsell dataforedit = BaseUtility.getItemByItemCode("");
+            dataforedit.setItemcode(itemcode);
+        }catch(BusinessException e){
+            throw new BusinessException(CommonConstant.STATUS_CODE_400,
+                    CommonConstant.ERR_INTERNAL_SERVER,
+                    CommonConstant.ERR_INTERNAL);
+        }
+    }
+
+    public void editItemBestSeller(String itemcode){
+        try{
+            ECBBestsell dataforedit = BaseUtility.getItemByItemCode(itemcode);
+            dataforedit.setItemcode("");
+        }catch(BusinessException e){
+            throw new BusinessException(CommonConstant.STATUS_CODE_400,
+                    CommonConstant.ERR_INTERNAL_SERVER,
+                    CommonConstant.ERR_INTERNAL);
+        }
     }
 
     public void addItem(ECBItemdto itemdata){

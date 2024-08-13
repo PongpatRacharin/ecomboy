@@ -27,6 +27,7 @@ public interface ItemRepository extends JpaRepository<ECBItem, String> {
             LEFT JOIN ecbbestsell
             ON ecbitem.itemcode=ecbbestsell.itemcode;
             """)
-    List<Map<String, Object>> getAllItemBestSeller(@Param("itemcode") String itemcode);
+    List<Map<String, Object>> getAllItemBestSeller();
+
 
 }
