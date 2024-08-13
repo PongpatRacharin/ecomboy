@@ -46,5 +46,10 @@
     "profileInfoTitle": "ข้อมูลส่วนตัว",
     "editProfileTitle": "แก้ไขข้อมูลส่วนตัว",
     "editButton": "แก้ไข",
-    "saveButton": "บันทึก"
+    "saveButton": "บันทึก",
+    "tableProductSku": "รหัสสินค้า",
+    "tableProductOrderId": "รหัสออเดอร์",
+    "tableProductName": "ชื่อสินค้า",
+    "tableProductSend": "วันที่ส่งสินค้า",
+    "tableProductStatus": "สถานะ"
 }

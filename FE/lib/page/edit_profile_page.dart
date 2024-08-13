@@ -34,7 +34,7 @@ class EditProfilePage extends StatelessWidget {
                     child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 128, vertical: 32),
+                          horizontal: 236, vertical: 32),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -56,7 +56,7 @@ class EditProfilePage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 16),
+                              const SizedBox(height: 32),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,11 +66,14 @@ class EditProfilePage extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        '${value.commonTrans['firstName']}',
-                                        style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
+                                      Container(
+                                        width: 60,
+                                        child: Text(
+                                          '${value.commonTrans['firstName']}',
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ),
                                       const SizedBox(width: 16),
                                       Container(
@@ -89,7 +92,7 @@ class EditProfilePage extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Text(
                                         '${value.commonTrans['lastName']}',
@@ -100,7 +103,7 @@ class EditProfilePage extends StatelessWidget {
                                       const SizedBox(width: 16),
                                       Container(
                                         height: 36,
-                                        width: 200,
+                                        width: 206,
                                         color: Colors.white,
                                         child: TextField(
                                           decoration: InputDecoration(
@@ -115,17 +118,22 @@ class EditProfilePage extends StatelessWidget {
                               const SizedBox(height: 8),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    '${value.commonTrans['phoneNumber']}',
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
+                                  Container(
+                                    width: 60,
+                                    child: Text(
+                                      '${value.commonTrans['phoneNumber']}',
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 8),
+                                  const SizedBox(width: 16),
+                                  Container(
+                                    height: 36,
+                                    width: 500,
+                                    color: Colors.white,
                                     child: TextField(
                                       decoration: InputDecoration(
                                           contentPadding: EdgeInsets.all(8),
@@ -136,13 +144,31 @@ class EditProfilePage extends StatelessWidget {
                               ),
                               const SizedBox(height: 8),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    '${value.commonTrans['Address']}',
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
+                                  Container(
+                                    width: 60,
+                                    child: Text(
+                                      '${value.commonTrans['Address']}',
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
+                                  const SizedBox(width: 16),
+                                  Container(
+                                    // height: 36,
+                                    width: 500,
+                                    color: Colors.white,
+                                    child: TextField(
+                                      maxLines: 10,
+                                      minLines: 6,
+                                      decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.all(8),
+                                          border: OutlineInputBorder()),
+                                    ),
+                                  )
                                 ],
                               ),
                             ],
@@ -162,11 +188,10 @@ class EditProfilePage extends StatelessWidget {
                                       horizontal: 16, vertical: 8),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
-                                      color: const Color.fromARGB(
-                                          255, 236, 148, 33)),
+                                      color: Color.fromARGB(255, 3, 192, 59)),
                                   child: Center(
                                     child: Text(
-                                      "${value.commonTrans['editButton']}",
+                                      "${value.commonTrans['saveButton']}",
                                       style:
                                           const TextStyle(color: Colors.white),
                                     ),

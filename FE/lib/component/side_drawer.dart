@@ -1,10 +1,12 @@
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
+import 'package:ecomboy/page/edit_profile_page.dart';
 import 'package:ecomboy/page/item_detail_page.dart';
 import 'package:ecomboy/page/item_faq_page.dart';
 import 'package:ecomboy/page/landing_page.dart';
 import 'package:ecomboy/page/main_admin_page.dart';
 import 'package:ecomboy/page/order_item_page.dart';
 import 'package:ecomboy/page/profile_page.dart';
+import 'package:ecomboy/page/sell_record_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -121,10 +123,10 @@ class LeftDrawer extends StatelessWidget {
                   // first page admin
                   GestureDetector(
                     onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: ((context) => MainAdminPage())));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => EditProfilePage())));
                     },
                     child: Container(
                       height: 30,
@@ -140,10 +142,10 @@ class LeftDrawer extends StatelessWidget {
                   // first page admin
                   GestureDetector(
                     onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: ((context) => MainAdminPage())));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => SellRecordPage())));
                     },
                     child: Container(
                       height: 30,
@@ -156,6 +158,27 @@ class LeftDrawer extends StatelessWidget {
                     ),
                   ),
                   //=======================================================================================================
+                  const SizedBox(height: 16),
+                  Text('test page'),
+                  const SizedBox(height: 16),
+                  // first page admin
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => MainAdminPage())));
+                    },
+                    child: Container(
+                      height: 30,
+                      width: 250,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: Colors.black)),
+                      child: Center(child: Text("main admin")),
+                    ),
+                  ),
                 ],
               )
             ],
