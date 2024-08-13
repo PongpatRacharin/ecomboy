@@ -27,6 +27,16 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping(value = "/stock/addbestsell", produces = "application/json")
+    public ResponseEntity<CommonResponse<List<ECBItemwiithbestsellerdto>>> addBestSeller(String itemcode) {
+        List<ECBItemwiithbestsellerdto> result = itemService.getItemBestSeller(itemcode);
+        CommonResponse<List<ECBItemwiithbestsellerdto>> response = new CommonResponse<>();
+        response.setCode(CommonConstant.STATUS_CODE_200);
+        response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);
+        response.setData(result);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping(value = "/stock/additem", produces = "application/json")
     public  ResponseEntity<CommonResponse<String>> addItem(@RequestBody ECBItemadddto itemdata) {
         ECBItemdto foradd = new ECBItemdto();
@@ -59,6 +69,15 @@ public class ItemController {
     @PostMapping(value = "/stock/updateitem", produces = "application/json")
     public ResponseEntity<CommonResponse<String>> updateItem(@RequestBody ECBItemupdatedto itemData) {
         itemService.updateItem(itemData.getItemcode(), itemData);
+        CommonResponse<String> response = new CommonResponse<>();
+        response.setCode(CommonConstant.STATUS_CODE_200);
+        response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/stock/delete")
+    public ResponseEntity<CommonResponse<String>> deleteItem(String itemcode) {
+        itemService.deleteItem(itemcode);
         CommonResponse<String> response = new CommonResponse<>();
         response.setCode(CommonConstant.STATUS_CODE_200);
         response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);

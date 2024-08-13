@@ -22,4 +22,11 @@ public interface ItemRepository extends JpaRepository<ECBItem, String> {
             """)
     Map<String, Object> getAllItemByItemCode(@Param("itemcode") String itemcode);
 
+    @Query(nativeQuery = true, value = """
+            SELECT * FROM ecbitem
+            LEFT JOIN ecbbestsell
+            ON ecbitem.itemcode=ecbbestsell.itemcode;
+            """)
+    List<Map<String, Object>> getAllItemBestSeller(@Param("itemcode") String itemcode);
+
 }

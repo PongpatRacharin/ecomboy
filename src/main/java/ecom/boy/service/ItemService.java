@@ -43,6 +43,17 @@ public class ItemService {
                         (int) t.get("balance")))
                 .collect(Collectors.toList());
     }
+    public List<ECBItemwiithbestsellerdto> getItemBestSeller(String itemcode){
+        List<Map<String, Object>> results = itemRepository.getAllItemBestSeller(itemcode);
+        return  results.stream()
+                .map(t -> new ECBItemwiithbestsellerdto(
+                        (String) t.get("itemcode"),
+                        (String) t.get("itemname"),
+                        (String) t.get("itemtype"),
+                        (int) t.get("balance"),
+                        (int) t.get("bestsellno")))
+                .collect(Collectors.toList());
+    }
 
     public void addItem(ECBItemdto itemdata){
         try {
@@ -87,6 +98,16 @@ public class ItemService {
             dataForupdate.setPrice(updatedItem.getPrice());
             dataForupdate.setImagedata(updatedItem.getImagedata());
             itemRepository.save(dataForupdate);
+        }catch(BusinessException e){
+            throw new BusinessException(CommonConstant.STATUS_CODE_400,
+                    CommonConstant.ERR_INTERNAL_SERVER,
+                    CommonConstant.ERR_INTERNAL);
+        }
+    }
+
+    public void deleteItem(String itemcode){
+        try {
+            itemRepository.deleteById(itemcode);
         }catch(BusinessException e){
             throw new BusinessException(CommonConstant.STATUS_CODE_400,
                     CommonConstant.ERR_INTERNAL_SERVER,
