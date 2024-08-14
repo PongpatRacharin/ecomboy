@@ -2,6 +2,7 @@ package ecom.boy.service;
 
 import ecom.boy.Constant.CommonConstant;
 import ecom.boy.model.persistence.ECBBestsell;
+import ecom.boy.model.persistence.ECBOrder;
 import ecom.boy.model.persistence.ECBQna;
 import ecom.boy.repository.BestsellerRepository;
 import ecom.boy.repository.QnaRepository;
@@ -85,6 +86,20 @@ public class ItemService {
         }
     }
 
+    public void addQusetion(ECBItemfaqansdto question){
+        try{
+            ECBQna questionforadd = new ECBQna();
+            questionforadd.setItemcode(question.getItemcode());
+            questionforadd.setQuestion(question.getQuestion());
+            questionforadd.setUsername(questionforadd.getUsername());
+            qnaRepository.save(questionforadd);
+        }catch(BusinessException e){
+            throw new BusinessException(CommonConstant.STATUS_CODE_400,
+                    CommonConstant.ERR_INTERNAL_SERVER,
+                    CommonConstant.ERR_INTERNAL);
+        }
+    }
+
     public void editItemBestSeller(String itemcode){
         try{
             ECBBestsell dataforedit = BaseUtility.getItemByItemCode(itemcode);
@@ -99,13 +114,6 @@ public class ItemService {
     public void addItem(ECBItemdto itemdata){
         try {
             ECBItem dataforadd = new ECBItem();
-//            // Count the current number of rows
-//            long rowCount = itemRepository.count();
-//
-//            // Set the ID based on the row count + 1
-//            itemdata.setItemid((int) (rowCount + 1));
-//            itemdata.setItemcode(String.valueOf(rowCount + 1));
-//itemdata.getItemcode()
             // Set the properties of dataforadd
             dataforadd.setItemid(itemdata.getItemid());
             dataforadd.setItemcode(BaseUtility.itemcodegenerate());
@@ -131,6 +139,12 @@ public class ItemService {
         return ecbOBJ.mapForObject(results);
     }
 
+    public ECBItemcodenpricedto getAllItemByItemCodenPrice(String itemcode){
+        Map<String, Object> results = itemRepository.getAllItemByItemCode();
+        ECBItemcodenpricedto ecbOBJ = new ECBItemcodenpricedto();
+        return ecbOBJ.mapForObject(results);
+    }
+
     public ECBItemfaqdto getAllItemFaQ(){
         Map<String, Object> results = qnaRepository.getAllQnA();
         ECBItemfaqdto ecbOBJ = new ECBItemfaqdto();
@@ -143,6 +157,22 @@ public class ItemService {
             dataForAdd.setQnaid(question.getQnaid());
             dataForAdd.setQuestion(question.getQuestion());
             qnaRepository.save(dataForAdd);
+        }catch(BusinessException e){
+            throw new BusinessException(CommonConstant.STATUS_CODE_400,
+                    CommonConstant.ERR_INTERNAL_SERVER,
+                    CommonConstant.ERR_INTERNAL);
+        }
+    }
+
+    public void orderitem(ECBOrderitemadddto orderinfo) {
+        try{
+            ECBOrder dataforadd = new ECBOrder();
+            dataforadd.setOrderid(orderinfo.getOrderid());
+            dataforadd.setOrdercode(orderinfo.getOrdercode());
+            dataforadd.setItemcode(orderinfo.getItemcode());
+            dataforadd.setOrderstatus(orderinfo.getOrderstatus());
+            dataforadd.setOrderdate(orderinfo.getOrderdate());
+            dataforadd.setOrderuserid(orderinfo.getOrderuserid());
         }catch(BusinessException e){
             throw new BusinessException(CommonConstant.STATUS_CODE_400,
                     CommonConstant.ERR_INTERNAL_SERVER,

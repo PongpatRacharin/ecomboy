@@ -36,5 +36,17 @@ public interface ItemRepository extends JpaRepository<ECBItem, String> {
             """)
     List<Map<String, Object>> getAllItemOrderLog();
 
+    @Query(nativeQuery = true, value = """
+            SELECT * FROM ecbitem
+            LEFT JOIN ecbbestsell 
+            ON ecbitem.itemcode=ecbbestsell.itemcode LIMIT 5;
+            """)
+    List<Map<String, Object>> getBestsellLanding();
 
+    @Query(nativeQuery = true, value = """
+            SELECT * FROM ecbitem
+            LEFT JOIN ecborder 
+            ON ecbitem.itemcode=ecborder.itemcode LIMIT 10;
+            """)
+    List<Map<String, Object>> getItemOrderLanding();
 }
