@@ -3,6 +3,7 @@ import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
 import 'package:ecomboy/page/add_or_edit_member_page.dart';
 import 'package:ecomboy/page/landing_page.dart';
 import 'package:ecomboy/page/item_detail_page.dart';
+import 'package:ecomboy/page/user_list_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,8 +35,10 @@ class SideColumnWidget extends StatelessWidget {
             MenuButton(
                 text: "${value.commonTrans['menu_EmployeeInfo']}",
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: ((context) => LandingPage())));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => UserListPage())));
                 }),
             // add or edit page
             const SizedBox(height: 8),
@@ -46,7 +49,9 @@ class SideColumnWidget extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: ((context) => const AddEditMemberPage())));
+                          builder: ((context) => const AddEditMemberPage(
+                                type: 'edit',
+                              ))));
                 }),
             // add or edit page
             const SizedBox(height: 8),

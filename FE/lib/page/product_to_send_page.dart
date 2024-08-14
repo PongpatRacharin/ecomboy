@@ -111,7 +111,7 @@ class ProductToSendPage extends StatelessWidget {
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
-                                          const ItemQuestionPage()));
+                                          ItemQuestionPage()));
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(

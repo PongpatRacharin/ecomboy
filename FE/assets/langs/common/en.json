@@ -51,5 +51,13 @@
     "tableProductOrderId": "รหัสออเดอร์",
     "tableProductName": "ชื่อสินค้า",
     "tableProductSend": "วันที่ส่งสินค้า",
-    "tableProductStatus": "สถานะ"
+    "tableProductStatus": "สถานะ",
+    "confirmDialog": "Confirm",
+    "confirmButton": "ใช่",
+    "confirmDialogContent": "คุณต้องการเลือกข้อมูลนี้ใช่หรือไม่?",
+    "employeeId": "รหัสพนักงาน",
+    "radioValue1": "member",
+    "radioValue2": "admin",
+    "radioValue3": "owner",
+    "radioValue4": "employee"
 }

@@ -1,9 +1,12 @@
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
+import 'package:ecomboy/page/add_or_edit_member_page.dart';
+import 'package:ecomboy/page/add_or_edit_product_page.dart';
 import 'package:ecomboy/page/edit_profile_page.dart';
 import 'package:ecomboy/page/item_detail_page.dart';
 import 'package:ecomboy/page/item_faq_page.dart';
 import 'package:ecomboy/page/landing_page.dart';
-import 'package:ecomboy/page/main_admin_page.dart';
+import 'package:ecomboy/page/product_list_page.dart';
+import 'package:ecomboy/page/user_list_page.dart';
 import 'package:ecomboy/page/order_item_page.dart';
 import 'package:ecomboy/page/profile_page.dart';
 import 'package:ecomboy/page/sell_record_page.dart';
@@ -161,13 +164,13 @@ class LeftDrawer extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text('test page'),
                   const SizedBox(height: 16),
-                  // first page admin
+                  // admin flow start
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: ((context) => MainAdminPage())));
+                              builder: ((context) => UserListPage())));
                     },
                     child: Container(
                       height: 30,
@@ -177,6 +180,109 @@ class LeftDrawer extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5),
                           border: Border.all(color: Colors.black)),
                       child: Center(child: Text("main admin")),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  // add member
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => AddEditMemberPage(
+                                    type: 'add',
+                                  ))));
+                    },
+                    child: Container(
+                      height: 30,
+                      width: 250,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: Colors.black)),
+                      child: Center(child: Text("add member")),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  // edit member
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => AddEditMemberPage(
+                                    type: 'edit',
+                                  ))));
+                    },
+                    child: Container(
+                      height: 30,
+                      width: 250,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: Colors.black)),
+                      child: Center(child: Text("edit member")),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  // product list page
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => ProductListPage())));
+                    },
+                    child: Container(
+                      height: 30,
+                      width: 250,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: Colors.black)),
+                      child: Center(child: Text("product list page")),
+                    ),
+                  ),
+                  // add product
+                  const SizedBox(height: 16),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => AddEditProductPage(
+                                    type: 'add',
+                                  ))));
+                    },
+                    child: Container(
+                      height: 30,
+                      width: 250,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: Colors.black)),
+                      child: Center(child: Text("add product")),
+                    ),
+                  ),
+                  // edit product
+                  const SizedBox(height: 16),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => AddEditProductPage(
+                                    type: 'edit',
+                                  ))));
+                    },
+                    child: Container(
+                      height: 30,
+                      width: 250,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: Colors.black)),
+                      child: Center(child: Text("edit product")),
                     ),
                   ),
                 ],

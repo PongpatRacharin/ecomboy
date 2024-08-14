@@ -44,9 +44,10 @@ class EditProfilePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  const SizedBox(width: 200),
                                   Text(
                                     '${value.commonTrans['editProfileTitle']}',
                                     style: const TextStyle(

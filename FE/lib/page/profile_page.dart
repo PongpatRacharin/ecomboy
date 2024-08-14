@@ -1,17 +1,9 @@
-import 'package:ecomboy/component/menu_button.dart';
 import 'package:ecomboy/component/menu_component.dart';
 import 'package:ecomboy/component/side_drawer.dart';
-import 'package:ecomboy/component/table.dart';
 import 'package:ecomboy/component/top_app_bar.dart';
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
 import 'package:ecomboy/page/edit_profile_page.dart';
-import 'package:ecomboy/page/item_faq_page.dart';
-import 'package:ecomboy/page/landing_page.dart';
-import 'package:ecomboy/page/order_item_page.dart';
-import 'package:ecomboy/page/register_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -45,9 +37,10 @@ class ProfilePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  const SizedBox(width: 200),
                                   Text(
                                     '${value.commonTrans['profileInfoTitle']}',
                                     style: TextStyle(

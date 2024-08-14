@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ecomboy/component/menu_button.dart';
 import 'package:ecomboy/component/menu_component.dart';
 import 'package:ecomboy/component/side_drawer.dart';
@@ -13,7 +15,8 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ItemQuestionPage extends StatelessWidget {
-  const ItemQuestionPage({super.key});
+  ItemQuestionPage({super.key});
+  final TextEditingController questionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +90,7 @@ class ItemQuestionPage extends StatelessWidget {
                                     height: 200,
                                     width: 500,
                                     child: TextFormField(
+                                      controller: questionController,
                                       readOnly: false,
                                       decoration: const InputDecoration(
                                           border: OutlineInputBorder()),
@@ -126,7 +130,14 @@ class ItemQuestionPage extends StatelessWidget {
                               // ),
                               // const SizedBox(width: 16),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Map<String, dynamic> data = {
+                                    'question': questionController.text
+                                  };
+                                  debugPrint('${jsonEncode(data)}');
+                                  // send question to BE
+                                  Navigator.of(context).pop(true);
+                                },
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 16, vertical: 8),
