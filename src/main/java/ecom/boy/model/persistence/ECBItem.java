@@ -32,6 +32,6 @@ public class ECBItem {
     @Column(name = "balance")
     private int  balance;
 
-    @Column(name = "imagedaata")
-    private byte[]  imagedata;
+    @Column(name = "imagedata")
+    private String  imagedata;
 }
