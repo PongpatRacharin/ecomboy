@@ -1,7 +1,9 @@
 package ecom.boy.controller;
 
 import ecom.boy.Constant.CommonConstant;
+import ecom.boy.model.ECBAuthendto;
 import ecom.boy.model.ECBUserdto;
+import ecom.boy.model.ECBUsermgntdto;
 import ecom.boy.model.persistence.ECBUser;
 import ecom.boy.model.response.CommonResponse;
 import ecom.boy.service.LoginService;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/login")
@@ -20,20 +23,48 @@ public class LoginController {
     @Autowired
     private LoginService loginService = new LoginService();
 
-    @GetMapping("/getuser")
-    public ResponseEntity<CommonResponse<List<ECBUserdto>>> getUserData() {
-        List<ECBUserdto> alluser = loginService.getAllUSer();
-        CommonResponse<List<ECBUserdto>> response = new CommonResponse<>();
-        response.setCode(CommonConstant.STATUS_CODE_200);
-        response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);
-        response.setData(alluser);
-        return ResponseEntity.ok(response);
+//    @GetMapping("/getuser")
+//    public ResponseEntity<CommonResponse<List<ECBUserdto>>> getUserData() {
+//        List<ECBUserdto> alluser = loginService.getAllUSer();
+//        CommonResponse<List<ECBUserdto>> response = new CommonResponse<>();
+//        response.setCode(CommonConstant.STATUS_CODE_200);
+//        response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);
+//        response.setData(alluser);
+//        return ResponseEntity.ok(response);
 //            throw new BusinessException(CommonConstant.STATUS_CODE_400,
 //                    CommonConstant.ERR_INTERNAL_SERVER,
 //                    CommonConstant.ERR_INTERNAL);
+//    }
+
+    @GetMapping("/user/getuser")
+    public ResponseEntity<CommonResponse<List<ECBUsermgntdto>>> getUserInfo() {
+        List<ECBUsermgntdto> Infomation = loginService.getUserInfo();
+        CommonResponse<List<ECBUsermgntdto>> response = new CommonResponse<>();
+        response.setCode(CommonConstant.STATUS_CODE_200);
+        response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);
+        response.setData(Infomation);
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/getuserbyusername")
+    @GetMapping("/user/delete")
+    public ResponseEntity<CommonResponse<String>> deleteuser(String userid) {
+        loginService.deleteUser(userid);
+        CommonResponse<String> response = new CommonResponse<>();
+        response.setCode(CommonConstant.STATUS_CODE_200);
+        response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping(value = "/user/update", produces = "application/json")
+    public ResponseEntity<CommonResponse<String>> updateUser(@RequestBody ECBUserdto userData) {
+        loginService.updateUser(Integer.parseInt(userData.getUserid()),userData);
+        CommonResponse<String> response = new CommonResponse<>();
+        response.setCode(CommonConstant.STATUS_CODE_200);
+        response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/user/getuserbyusername")
     public ResponseEntity<CommonResponse<ECBUserdto>> getUserData(String username) {
         ECBUserdto userName = loginService.getUSerByUsername(username);
         CommonResponse<ECBUserdto> response = new CommonResponse<>();
@@ -43,12 +74,22 @@ public class LoginController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping(value = "/save", produces = "application/json")
+    @PostMapping(value = "/user/save", produces = "application/json")
     public ResponseEntity<CommonResponse<String>> createUser(@RequestBody ECBUserdto userData) {
         loginService.saveUser(userData);
         CommonResponse<String> response = new CommonResponse<>();
         response.setCode(CommonConstant.STATUS_CODE_200);
         response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping(value = "/authen", produces = "application/json")
+    public ResponseEntity<CommonResponse<ECBAuthendto>> authenuser(@RequestBody ECBAuthendto username){
+        ECBAuthendto userdata = loginService.getUserAndPassword(username);
+        CommonResponse<ECBAuthendto> response = new CommonResponse<>();
+        response.setCode(CommonConstant.STATUS_CODE_200);
+        response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);
+        response.setData(userdata);
         return ResponseEntity.ok(response);
     }
 }
