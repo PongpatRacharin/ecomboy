@@ -2,7 +2,9 @@ package ecom.boy.service;
 
 import ecom.boy.Constant.CommonConstant;
 import ecom.boy.model.persistence.ECBBestsell;
+import ecom.boy.model.persistence.ECBQna;
 import ecom.boy.repository.BestsellerRepository;
+import ecom.boy.repository.QnaRepository;
 import ecom.boy.utility.*;
 import ecom.boy.model.*;
 import ecom.boy.model.persistence.ECBItem;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,6 +22,7 @@ import java.util.stream.Collectors;
 public class ItemService {
     @Autowired
     ItemRepository itemRepository;
+    QnaRepository qnaRepository;
 
     public List<ECBItemdto> getAllItem(){
         List<Map<String, Object>> results = itemRepository.getAllItem();
@@ -45,6 +49,19 @@ public class ItemService {
                         (int) t.get("balance")))
                 .collect(Collectors.toList());
     }
+
+    public List<ECBGetoderlogdto> getAllItemWithOrderLog(){
+        List<Map<String, Object>> results = itemRepository.getAllItemOrderLog();
+        return results.stream()
+                .map(t -> new ECBGetoderlogdto(
+                        (String) t.get("itemcode"),
+                        (String) t.get("itemname"),
+                        (String) t.get("ordercode"),
+                        (Date) t.get("orderdate"),
+                        (String) t.get("orderstatus")))
+                .collect(Collectors.toList());
+    }
+
     public List<ECBItemwiithbestsellerdto> getItemBestSeller(){
         List<Map<String, Object>> results = itemRepository.getAllItemBestSeller();
         return  results.stream()
@@ -109,9 +126,28 @@ public class ItemService {
     }
 
     public ECBItemfilterbycodedto getAllItemByItemCode(String itemcode){
-        Map<String, Object> results = itemRepository.getAllItemByItemCode(itemcode);
+        Map<String, Object> results = itemRepository.getAllItemByItemCode();
         ECBItemfilterbycodedto ecbOBJ = new ECBItemfilterbycodedto();
         return ecbOBJ.mapForObject(results);
+    }
+
+    public ECBItemfaqdto getAllItemFaQ(){
+        Map<String, Object> results = qnaRepository.getAllQnA();
+        ECBItemfaqdto ecbOBJ = new ECBItemfaqdto();
+        return ecbOBJ.mapForObject(results);
+    }
+
+    public void addQuestion(ECBItemfaqdto question){
+        try{
+            ECBQna dataForAdd = new ECBQna();
+            dataForAdd.setQnaid(question.getQnaid());
+            dataForAdd.setQuestion(question.getQuestion());
+            qnaRepository.save(dataForAdd);
+        }catch(BusinessException e){
+            throw new BusinessException(CommonConstant.STATUS_CODE_400,
+                    CommonConstant.ERR_INTERNAL_SERVER,
+                    CommonConstant.ERR_INTERNAL);
+        }
     }
 
     public void updateItem(String itemid, ECBItemupdatedto updatedItem) {
@@ -138,4 +174,5 @@ public class ItemService {
                     CommonConstant.ERR_INTERNAL);
         }
     }
+
 }

@@ -20,7 +20,7 @@ public interface ItemRepository extends JpaRepository<ECBItem, String> {
             SELECT * FROM ecbitem
             WHERE itemcode = :itemcode;
             """)
-    Map<String, Object> getAllItemByItemCode(@Param("itemcode") String itemcode);
+    Map<String, Object> getAllItemByItemCode();
 
     @Query(nativeQuery = true, value = """
             SELECT * FROM ecbitem
@@ -28,6 +28,13 @@ public interface ItemRepository extends JpaRepository<ECBItem, String> {
             ON ecbitem.itemcode=ecbbestsell.itemcode;
             """)
     List<Map<String, Object>> getAllItemBestSeller();
+
+    @Query(nativeQuery = true, value = """
+            SELECT * FROM ecbitem
+            LEFT JOIN ecborder
+            ON ecbitem.itemcode=ecborder.itemcode;
+            """)
+    List<Map<String, Object>> getAllItemOrderLog();
 
 
 }
