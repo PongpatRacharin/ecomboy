@@ -5,8 +5,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
+import ecom.boy.model.ECBUserdto;
 import ecom.boy.model.persistence.ECBBestsell;
+import ecom.boy.model.persistence.ECBUser;
 import ecom.boy.repository.*;
+import ecom.boy.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -19,7 +22,6 @@ public class BaseUtility {
 
     private static BestsellerRepository bestsellerRepository;
 
-    @Autowired
     public void setECBItemRepository(BestsellerRepository ecbItemRepository) {
         BaseUtility.bestsellerRepository = ecbItemRepository;
     }
@@ -27,5 +29,6 @@ public class BaseUtility {
     public static ECBBestsell getItemByItemCode(String itemcode) {
         return (ECBBestsell) bestsellerRepository.getItemByItemCode(itemcode);
     }
+
 }
 

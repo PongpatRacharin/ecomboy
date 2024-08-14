@@ -30,6 +30,7 @@ public interface LoginRepository extends JpaRepository<ECBUser, String> {
                 """)
     Map<String, Object> getAllUserByUserName(@Param("username") String username);
 
+
     @Query(nativeQuery = true, value = """
                 SELECT * FROM ecbuser
                 WHERE userid = :userid;

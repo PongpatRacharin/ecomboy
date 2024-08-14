@@ -86,6 +86,20 @@ public class ItemService {
         }
     }
 
+    public void addQusetion(ECBItemfaqansdto question){
+        try{
+            ECBQna questionforadd = new ECBQna();
+            questionforadd.setItemcode(question.getItemcode());
+            questionforadd.setQuestion(question.getQuestion());
+            questionforadd.setUsername(questionforadd.getUsername());
+            qnaRepository.save(questionforadd);
+        }catch(BusinessException e){
+            throw new BusinessException(CommonConstant.STATUS_CODE_400,
+                    CommonConstant.ERR_INTERNAL_SERVER,
+                    CommonConstant.ERR_INTERNAL);
+        }
+    }
+
     public void editItemBestSeller(String itemcode){
         try{
             ECBBestsell dataforedit = BaseUtility.getItemByItemCode(itemcode);
@@ -100,13 +114,6 @@ public class ItemService {
     public void addItem(ECBItemdto itemdata){
         try {
             ECBItem dataforadd = new ECBItem();
-//            // Count the current number of rows
-//            long rowCount = itemRepository.count();
-//
-//            // Set the ID based on the row count + 1
-//            itemdata.setItemid((int) (rowCount + 1));
-//            itemdata.setItemcode(String.valueOf(rowCount + 1));
-//itemdata.getItemcode()
             // Set the properties of dataforadd
             dataforadd.setItemid(itemdata.getItemid());
             dataforadd.setItemcode(BaseUtility.itemcodegenerate());

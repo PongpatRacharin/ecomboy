@@ -2,12 +2,20 @@ package ecom.boy.controller;
 
 import ecom.boy.Constant.CommonConstant;
 import ecom.boy.model.*;
+import ecom.boy.repository.LoginRepository;
+import ecom.boy.model.persistence.ECBItem;
+import ecom.boy.model.persistence.ECBUser;
 import ecom.boy.model.response.CommonResponse;
 import ecom.boy.service.ItemService;
+import ecom.boy.service.LoginService;
+import ecom.boy.utility.BaseUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -16,6 +24,7 @@ public class ItemController {
 
     @Autowired
     private ItemService itemService = new ItemService();
+    private LoginService loginService = new LoginService();
 
     @GetMapping("/stock/getitem")
     public ResponseEntity<CommonResponse<List<ECBItemstockgetdto>>> getItemInfo(){
@@ -92,6 +101,37 @@ public class ItemController {
         response.setCode(CommonConstant.STATUS_CODE_200);
         response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);
         response.setData(result);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/stock/orderitem")
+    public ResponseEntity<CommonResponse<List<ECBItemwiithbestsellerdto>>> addOrderItem(int userid,String itemcode) {
+
+        //Declair variable to temporaly store data for use later
+        ECBItemfilterbycodedto iteminfo = itemService.getAllItemByItemCode(itemcode);
+        ECBOrderitemadddto orderinfo = new ECBOrderitemadddto();
+
+        //Set Value to orderinfo
+        orderinfo.setOrdercode("");
+        orderinfo.setItemcode(iteminfo.getItemcode());
+        orderinfo.setOrderstatus("");
+        orderinfo.setOrderdate(new Date());
+        orderinfo.setOrderuserid(userid);
+
+        //Add orderinfo's data to ecborder db
+        itemService.orderitem(orderinfo);
+        CommonResponse<List<ECBItemwiithbestsellerdto>> response = new CommonResponse<>();
+        response.setCode(CommonConstant.STATUS_CODE_200);
+        response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping(value = "/faq/addanswer", produces = "application/json")
+    public ResponseEntity<CommonResponse<List<ECBItemwiithbestsellerdto>>> addFaQAns(ECBItemfaqansdto answer) {
+        itemService.addQusetion(answer);
+        CommonResponse<List<ECBItemwiithbestsellerdto>> response = new CommonResponse<>();
+        response.setCode(CommonConstant.STATUS_CODE_200);
+        response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);
         return ResponseEntity.ok(response);
     }
 
