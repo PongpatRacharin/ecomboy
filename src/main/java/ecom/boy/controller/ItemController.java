@@ -65,6 +65,16 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/stock/getitembycodewithprice")
+    public ResponseEntity<CommonResponse<ECBItemcodenpricedto>> getItemwithPrice(String itemcode) {
+        ECBItemcodenpricedto itemobj = itemService.getAllItemByItemCodenPrice(itemcode);
+        CommonResponse<ECBItemcodenpricedto> response = new CommonResponse<>();
+        response.setCode(CommonConstant.STATUS_CODE_200);
+        response.setMessage(CommonConstant.SUCCESS_DESCRIPTION);
+        response.setData(itemobj);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/faq/getfaq")
     public ResponseEntity<CommonResponse<ECBItemfaqdto>> getFaQ(){
         ECBItemfaqdto itemOBJ = itemService.getAllItemFaQ();
