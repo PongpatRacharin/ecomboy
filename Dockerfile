@@ -6,7 +6,7 @@ LABEL authors="ping"
 WORKDIR /app
 
 # Copy the application JAR file to the container
-COPY target/EComboyApplication.jar app.jar
+COPY target/boy-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose the application port (default is 8080)
 EXPOSE 8080
