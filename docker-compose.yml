@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  app:
+  backend:
     build:
       context: .
       dockerfile: Dockerfile
@@ -21,6 +21,8 @@ services:
     environment:
       MYSQL_DATABASE: ecom_boy
       MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123456
     volumes:
       - db_data:/var/lib/mysql
 
