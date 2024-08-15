@@ -112,9 +112,12 @@ class LoginPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               debugPrint(userNameController.text);
                               debugPrint(passwordController.text);
+                              String username = userNameController.text;
+                              String password = passwordController.text;
+                              await value.loginAction(username, password);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
