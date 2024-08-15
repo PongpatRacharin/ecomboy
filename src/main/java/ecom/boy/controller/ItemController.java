@@ -112,9 +112,9 @@ public class ItemController {
         ECBOrderitemadddto orderinfo = new ECBOrderitemadddto();
 
         //Set Value to orderinfo
-        orderinfo.setOrdercode("");
+        orderinfo.setOrdercode(BaseUtility.ordercodegenerate());
         orderinfo.setItemcode(iteminfo.getItemcode());
-        orderinfo.setOrderstatus("");
+        orderinfo.setOrderstatus("Prepare");
         orderinfo.setOrderdate(new Date());
         orderinfo.setOrderuserid(userid);
 

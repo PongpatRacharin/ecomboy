@@ -20,6 +20,12 @@ public class BaseUtility {
         return "ITEM" + myDateObj.format(myFormatObj);
     }
 
+    public static String ordercodegenerate(){
+        LocalDateTime myDateObj = LocalDateTime.now();
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("MMddHHmmss");
+        return "ORDER" + myDateObj.format(myFormatObj);
+    }
+
     private static BestsellerRepository bestsellerRepository;
 
     public void setECBItemRepository(BestsellerRepository ecbItemRepository) {
