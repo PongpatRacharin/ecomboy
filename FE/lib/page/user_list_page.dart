@@ -22,10 +22,10 @@ class _UserListPageState extends State<UserListPage> {
     super.initState();
     final inventory = Provider.of<InventoryProvider>(context, listen: false);
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await inventory.getUserAction();
-      inventory.triggerUpdate();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    //   await inventory.getUserAction();
+    //   inventory.triggerUpdate();
+    // });
   }
 
   @override
@@ -108,165 +108,84 @@ class _UserListPageState extends State<UserListPage> {
 
       List<DataRow> _getRow(List<Map<String, dynamic>> dataList) {
         List<DataRow> rows = [];
-        // loop
-        for (var data in dataList) {
-          rows.add(
-            DataRow(cells: <DataCell>[
-              DataCell(Text(data['userid'] ?? '')),
-              DataCell(Text(data['username'] ?? '')),
-              DataCell(Text(data['password'] ?? '')),
-              DataCell(Text(data['email'] ?? '')),
-              DataCell(GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => AddEditMemberPage(
-                            type: 'edit',
-                            username: data['username'] ?? '',
-                          )));
-                },
-                child: Container(
-                  height: 36,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Color.fromARGB(255, 3, 192, 59)),
-                  child: Center(
-                    child: Text(
-                      "${value.commonTrans['tableEdit']}",
-                      style: const TextStyle(color: Colors.white),
+
+        // 5 members
+        for (int i = 0; i < 5; i++) {
+          if (i < dataList.length) {
+            // loop
+            var data = dataList[i];
+            rows.add(
+              DataRow(cells: <DataCell>[
+                DataCell(Text(data['userid'] ?? '')),
+                DataCell(Text(data['username'] ?? '')),
+                DataCell(Text(data['password'] ?? '')),
+                DataCell(Text(data['email'] ?? '')),
+                DataCell(GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AddEditMemberPage(
+                              type: 'edit',
+                              username: data['username'] ?? '',
+                            )));
+                  },
+                  child: Container(
+                    height: 36,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Color.fromARGB(255, 3, 192, 59)),
+                    child: Center(
+                      child: Text(
+                        "${value.commonTrans['tableEdit']}",
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
-                ),
-              )),
-              DataCell(GestureDetector(
-                onTap: () async {
-                  bool? results = await ConfirmDialog.show(context);
-                  if (results == true) {
-                    debugPrint('delete confirm');
-                  } else {
-                    debugPrint('cancel');
-                  }
-                },
-                child: Container(
-                  height: 36,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Color.fromARGB(255, 192, 3, 3)),
-                  child: Center(
-                    child: Text(
-                      "${value.commonTrans['tableDelete']}",
-                      style: const TextStyle(color: Colors.white),
+                )),
+                DataCell(GestureDetector(
+                  onTap: () async {
+                    bool? results = await ConfirmDialog.show(context);
+                    if (results == true) {
+                      debugPrint('delete confirm');
+                    } else {
+                      debugPrint('cancel');
+                    }
+                  },
+                  child: Container(
+                    height: 36,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Color.fromARGB(255, 192, 3, 3)),
+                    child: Center(
+                      child: Text(
+                        "${value.commonTrans['tableDelete']}",
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
-                ),
-              )),
-            ]),
-          );
+                )),
+              ]),
+            );
+          } else {
+            // add an empty row
+            rows.add(
+              DataRow(cells: <DataCell>[
+                DataCell(Text('')),
+                DataCell(Text('')),
+                DataCell(Text('')),
+                DataCell(Text('')),
+                DataCell(Text('')),
+                DataCell(Text('')),
+              ]),
+            );
+          }
         }
-        // add empty rows
-        while (rows.length < 5) {
-          rows.add(DataRow(cells: <DataCell>[
-            DataCell(Text('')),
-            DataCell(Text('')),
-            DataCell(Text('')),
-            DataCell(Text('')),
-            DataCell(Text('')),
-            DataCell(Text('')),
-          ]));
-        }
+
         return rows;
       }
-
-      // List<DataRow> _getRow() {
-      //   return <DataRow>[
-      //     DataRow(cells: <DataCell>[
-      //       DataCell(Text('id')),
-      //       DataCell(Text('username')),
-      //       DataCell(Text('password')),
-      //       DataCell(Text('email')),
-      //       DataCell(GestureDetector(
-      //         onTap: () {
-      //           Navigator.of(context).push(MaterialPageRoute(
-      //               builder: ((context) => AddEditMemberPage(type: 'edit'))));
-      //         },
-      //         child: Container(
-      //           height: 36,
-      //           padding:
-      //               const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      //           decoration: BoxDecoration(
-      //               borderRadius: BorderRadius.circular(5),
-      //               color: Color.fromARGB(255, 3, 192, 59)),
-      //           child: Center(
-      //             child: Text(
-      //               "${value.commonTrans['tableEdit']}",
-      //               style: const TextStyle(color: Colors.white),
-      //             ),
-      //           ),
-      //         ),
-      //       )),
-      //       DataCell(GestureDetector(
-      //         onTap: () async {
-      //           bool? results = await ConfirmDialog.show(context);
-      //           if (results == true) {
-      //             debugPrint('delete confirm');
-      //           } else {
-      //             debugPrint('cancel');
-      //           }
-      //         },
-      //         child: Container(
-      //           height: 36,
-      //           padding:
-      //               const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      //           decoration: BoxDecoration(
-      //               borderRadius: BorderRadius.circular(5),
-      //               color: Color.fromARGB(255, 192, 3, 3)),
-      //           child: Center(
-      //             child: Text(
-      //               "${value.commonTrans['tableDelete']}",
-      //               style: const TextStyle(color: Colors.white),
-      //             ),
-      //           ),
-      //         ),
-      //       )),
-      //     ]),
-      //     // dummy empty row
-      //     DataRow(cells: <DataCell>[
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //     ]),
-      //     DataRow(cells: <DataCell>[
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //     ]),
-      //     DataRow(cells: <DataCell>[
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //     ]),
-      //     DataRow(cells: <DataCell>[
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //       DataCell(Text('')),
-      //     ]),
-      //   ];
-      // }
 
       return Scaffold(
           appBar: const TopAppBar(),

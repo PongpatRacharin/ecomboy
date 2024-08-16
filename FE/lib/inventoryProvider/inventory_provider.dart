@@ -8,7 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class InventoryProvider with ChangeNotifier {
   Map<String, String> commonTrans = {};
   // get
-  List<Map<String, dynamic>> _userList = [];
+  List<Map<String, dynamic>> _userList = [
+    {
+      "userid": "0001",
+      "username": "admin",
+      "password": "admin",
+      "email": "test@xxmail.com"
+    }
+  ];
   List<Map<String, dynamic>> get userList => _userList;
 
   void triggerUpdate() {
