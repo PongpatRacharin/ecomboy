@@ -1,5 +1,5 @@
 # Stage 1: Build the application with Maven
-FROM maven:3.8.6-eclipse-temurin-17 AS build
+FROM maven:3.8.8-eclipse-temurin-17 AS build
 WORKDIR /app
 
 # Copy the pom.xml and download dependencies
@@ -11,7 +11,7 @@ RUN mvn clean package -DskipTests
 RUN mvn clean install -DskipTests
 
 # Stage 2: Run the application
-FROM eclipse-temurin:17-jdk-alpine
+FROM openjdk:17-slim-buster
 WORKDIR /app
 LABEL authors="ping"
 
