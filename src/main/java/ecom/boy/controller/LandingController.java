@@ -22,6 +22,7 @@ public class LandingController {
     @Autowired
     private LandingService landingService = new LandingService();
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/item/getbestsell")
     public ResponseEntity<CommonResponse<List<ECBBestselllandingdto>>> getBestSeller() {
         List<ECBBestselllandingdto> result = landingService.getBestSellerLanding();
@@ -32,6 +33,7 @@ public class LandingController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/item/getitem")
     public ResponseEntity<CommonResponse<List<ECBBestselllandingdto>>> getItemOrderLanding() {
         List<ECBBestselllandingdto> result = landingService.getBestSellerLanding();

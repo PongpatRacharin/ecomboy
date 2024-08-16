@@ -37,7 +37,7 @@ public class LoginController {
 //                    CommonConstant.ERR_INTERNAL);
 //    }
 
-
+    @CrossOrigin(origins = "*")
     @GetMapping("/user/getuser")
     public ResponseEntity<CommonResponse<List<ECBUsermgntdto>>> getUserInfo() {
         List<ECBUsermgntdto> Infomation = loginService.getUserInfo();
@@ -48,6 +48,7 @@ public class LoginController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/user/delete")
     public ResponseEntity<CommonResponse<String>> deleteuser(String userid) {
         loginService.deleteUser(userid);
@@ -57,6 +58,7 @@ public class LoginController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping(value = "/user/update", produces = "application/json")
     public ResponseEntity<CommonResponse<String>> updateUser(@RequestBody ECBUserdto userData) {
         loginService.updateUser(Integer.parseInt(userData.getUserid()),userData);
@@ -66,6 +68,7 @@ public class LoginController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/user/getuserbyusername")
     public ResponseEntity<CommonResponse<ECBUserdto>> getUserData(String username) {
         ECBUserdto userName = loginService.getUSerByUsername(username);
@@ -76,6 +79,7 @@ public class LoginController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping(value = "/user/save", produces = "application/json")
     public ResponseEntity<CommonResponse<String>> createUser(@RequestBody ECBUserdto userData) {
         loginService.saveUser(userData);
@@ -85,6 +89,7 @@ public class LoginController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping(value = "/authen", produces = "application/json")
     public ResponseEntity<CommonResponse<ECBAuthendto>> authenuser(@RequestBody ECBAuthendto username){
         ECBAuthendto userdata = loginService.getUserAndPassword(username);
