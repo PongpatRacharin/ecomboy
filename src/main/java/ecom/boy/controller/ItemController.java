@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1/item")
 public class ItemController {
@@ -27,7 +27,7 @@ public class ItemController {
     private ItemService itemService = new ItemService();
     private LoginService loginService = new LoginService();
 
-    @CrossOrigin(origins = "http://localhost:*")
+
     @GetMapping("/stock/getitem")
     public ResponseEntity<CommonResponse<List<ECBItemstockgetdto>>> getItemInfo(){
         List<ECBItemstockgetdto> Information = itemService.getItemInfo();

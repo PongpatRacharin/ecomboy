@@ -15,12 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1/landing")
 public class LandingController {
     @Autowired
     private LandingService landingService = new LandingService();
-    @CrossOrigin(origins = "http://localhost:*")
+
     @GetMapping("/item/getbestsell")
     public ResponseEntity<CommonResponse<List<ECBBestselllandingdto>>> getBestSeller() {
         List<ECBBestselllandingdto> result = landingService.getBestSellerLanding();

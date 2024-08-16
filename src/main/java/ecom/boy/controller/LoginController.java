@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1/login")
 public class LoginController {
@@ -36,7 +37,7 @@ public class LoginController {
 //                    CommonConstant.ERR_INTERNAL);
 //    }
 
-    @CrossOrigin(origins = "http://localhost:*")
+
     @GetMapping("/user/getuser")
     public ResponseEntity<CommonResponse<List<ECBUsermgntdto>>> getUserInfo() {
         List<ECBUsermgntdto> Infomation = loginService.getUserInfo();
