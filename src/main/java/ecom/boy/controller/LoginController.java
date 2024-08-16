@@ -36,6 +36,7 @@ public class LoginController {
 //                    CommonConstant.ERR_INTERNAL);
 //    }
 
+    @CrossOrigin(origins = "http://localhost:*")
     @GetMapping("/user/getuser")
     public ResponseEntity<CommonResponse<List<ECBUsermgntdto>>> getUserInfo() {
         List<ECBUsermgntdto> Infomation = loginService.getUserInfo();

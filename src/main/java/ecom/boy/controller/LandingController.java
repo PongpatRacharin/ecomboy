@@ -20,7 +20,7 @@ import java.util.Map;
 public class LandingController {
     @Autowired
     private LandingService landingService = new LandingService();
-
+    @CrossOrigin(origins = "http://localhost:*")
     @GetMapping("/item/getbestsell")
     public ResponseEntity<CommonResponse<List<ECBBestselllandingdto>>> getBestSeller() {
         List<ECBBestselllandingdto> result = landingService.getBestSellerLanding();
