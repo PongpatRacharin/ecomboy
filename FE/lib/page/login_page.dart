@@ -1,6 +1,8 @@
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
 import 'package:ecomboy/page/landing_page.dart';
+import 'package:ecomboy/page/profile_page.dart';
 import 'package:ecomboy/page/register_page.dart';
+import 'package:ecomboy/page/user_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -117,12 +119,45 @@ class LoginPage extends StatelessWidget {
                               debugPrint(passwordController.text);
                               String username = userNameController.text;
                               String password = passwordController.text;
-                              await value.loginAction(username, password);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LandingPage()));
+                              var results =
+                                  await value.loginAction(username, password);
+                              if (results['message'] == 'success') {
+                                // store permission to local cookie
+                                String permission =
+                                    results['data']['permission'];
+                                await value.storePermission(permission);
+                                switch (permission) {
+                                  case 'ADM':
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const UserListPage()));
+                                    break;
+                                  case 'OWN':
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const UserListPage()));
+                                    break;
+                                  case 'EMP':
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ProfilePage()));
+                                    break;
+                                  case 'MEM':
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LandingPage()));
+                                    break;
+                                  default:
+                                }
+                              }
                             },
                             child: Container(
                               height: 30,

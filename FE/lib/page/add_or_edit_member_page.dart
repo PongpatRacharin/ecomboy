@@ -9,7 +9,9 @@ import 'package:provider/provider.dart';
 
 class AddEditMemberPage extends StatefulWidget {
   final String type;
-  const AddEditMemberPage({super.key, required this.type});
+  final String username;
+  const AddEditMemberPage(
+      {super.key, required this.type, required this.username});
 
   @override
   State<AddEditMemberPage> createState() => _AddEditMemberPageState();

@@ -1,4 +1,5 @@
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
+import 'package:ecomboy/page/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +50,12 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 const SizedBox(width: 8),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    // remove sharedpref and push to login page
+                    await value.clearPermission();
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => LoginPage()));
+                  },
                   child: Container(
                     height: 30,
                     width: 100,

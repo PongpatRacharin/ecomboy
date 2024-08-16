@@ -191,6 +191,7 @@ class LeftDrawer extends StatelessWidget {
                           MaterialPageRoute(
                               builder: ((context) => AddEditMemberPage(
                                     type: 'add',
+                                    username: '',
                                   ))));
                     },
                     child: Container(
@@ -212,6 +213,7 @@ class LeftDrawer extends StatelessWidget {
                           MaterialPageRoute(
                               builder: ((context) => AddEditMemberPage(
                                     type: 'edit',
+                                    username: 'admin',
                                   ))));
                     },
                     child: Container(

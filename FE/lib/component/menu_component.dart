@@ -51,6 +51,7 @@ class SideColumnWidget extends StatelessWidget {
                       MaterialPageRoute(
                           builder: ((context) => const AddEditMemberPage(
                                 type: 'edit',
+                                username: 'admin',
                               ))));
                 }),
             // add or edit page

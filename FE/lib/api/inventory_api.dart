@@ -7,7 +7,7 @@ class InventoryAPI {
     receiveTimeout: const Duration(milliseconds: 600),
     sendTimeout: const Duration(milliseconds: 600),
   ));
-  final endPoint = "";
+  final endPoint = "localhost:8080";
 
   Future postmanTemplate(header) async {
     String _tag = "postmanTemplate";
