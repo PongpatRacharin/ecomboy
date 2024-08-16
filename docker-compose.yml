@@ -21,10 +21,10 @@ services:
     environment:
       MYSQL_DATABASE: ecom_boy
       MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 123456
+
     volumes:
       - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
   db_data:
