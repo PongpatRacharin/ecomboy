@@ -28,6 +28,7 @@ public class ItemController {
     private LoginService loginService = new LoginService();
 
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/stock/getitem")
     public ResponseEntity<CommonResponse<List<ECBItemstockgetdto>>> getItemInfo(){
         List<ECBItemstockgetdto> Information = itemService.getItemInfo();
@@ -38,6 +39,7 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/stock/bestsellno")
     public ResponseEntity<CommonResponse<List<ECBItemwiithbestsellerdto>>> editItemBestSeller(String itemcode) {
         itemService.editItemBestSeller(itemcode);
@@ -47,6 +49,7 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/stock/getorderlog")
     public ResponseEntity<CommonResponse<List<ECBGetoderlogdto>>> getOrderLog(){
         List<ECBGetoderlogdto> result = itemService.getAllItemWithOrderLog();
@@ -57,6 +60,7 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/stock/delete")
     public ResponseEntity<CommonResponse<String>> deleteItem(String itemcode) {
         itemService.deleteItem(itemcode);
@@ -66,6 +70,7 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/stock/getitembycode")
     public ResponseEntity<CommonResponse<ECBItemfilterbycodedto>> getUserData(String itemcode) {
         ECBItemfilterbycodedto itemobj = itemService.getAllItemByItemCode(itemcode);
@@ -76,6 +81,7 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/stock/getitembycodewithprice")
     public ResponseEntity<CommonResponse<ECBItemcodenpricedto>> getItemwithPrice(String itemcode) {
         ECBItemcodenpricedto itemobj = itemService.getAllItemByItemCodenPrice(itemcode);
@@ -86,6 +92,7 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/faq/getfaq")
     public ResponseEntity<CommonResponse<ECBItemfaqdto>> getFaQ(){
         ECBItemfaqdto itemOBJ = itemService.getAllItemFaQ();
@@ -96,6 +103,7 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/stock/getbestsell")
     public ResponseEntity<CommonResponse<List<ECBItemwiithbestsellerdto>>> getBestSeller() {
         List<ECBItemwiithbestsellerdto> result = itemService.getItemBestSeller();
@@ -106,6 +114,7 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/stock/orderitem")
     public ResponseEntity<CommonResponse<List<ECBItemwiithbestsellerdto>>> addOrderItem(int userid,String itemcode) {
 
@@ -128,6 +137,7 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping(value = "/faq/addanswer", produces = "application/json")
     public ResponseEntity<CommonResponse<List<ECBItemwiithbestsellerdto>>> addFaQAns(ECBItemfaqansdto answer) {
         itemService.addQusetion(answer);
@@ -137,6 +147,7 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/stock/addbestsell")
     public ResponseEntity<CommonResponse<List<ECBItemwiithbestsellerdto>>> addItemBestSeller(String itemcode) {
         itemService.addItemBestSeller(itemcode);
@@ -146,6 +157,7 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/faq/addquestion")
     public ResponseEntity<CommonResponse<String>> addQustion(@RequestBody ECBQnadto question){
         ECBQnadto foradd = new ECBQnadto();
@@ -157,6 +169,7 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping(value = "/stock/additem", produces = "application/json")
     public  ResponseEntity<CommonResponse<String>> addItem(@RequestBody ECBItemadddto itemdata) {
         ECBItemdto foradd = new ECBItemdto();
@@ -177,6 +190,7 @@ public class ItemController {
     }
 
 
+    @CrossOrigin(origins = "*")
     @PostMapping(value = "/stock/updateitem", produces = "application/json")
     public ResponseEntity<CommonResponse<String>> updateItem(@RequestBody ECBItemupdatedto itemData) {
         itemService.updateItem(itemData.getItemcode(), itemData);
