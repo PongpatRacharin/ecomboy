@@ -14,7 +14,7 @@ public class ECBUserdto {
     private String username;
     private String password;
     private String name;
-    private String snaem;
+    private String sname;
     private String address;
     private String tel;
     private String email;
@@ -26,7 +26,7 @@ public class ECBUserdto {
         result.setUsername((String)mapValue.get("username"));
         result.setPassword((String)mapValue.get("password"));
         result.setName((String)mapValue.get("name"));
-        result.setSnaem((String)mapValue.get("snaem"));
+        result.setSname((String)mapValue.get("sname"));
         result.setAddress((String)mapValue.get("address"));
         result.setTel((String)mapValue.get("tel"));
         result.setEmail((String)mapValue.get("email"));

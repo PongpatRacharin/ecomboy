@@ -13,5 +13,6 @@ public class ECBItemstockgetdto {
     private String itemcode;
     private String itemname;
     private String  itemtype;
+    private int price;
     private int balance;
 }

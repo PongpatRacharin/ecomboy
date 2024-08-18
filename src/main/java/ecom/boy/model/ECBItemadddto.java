@@ -11,6 +11,6 @@ public class ECBItemadddto {
     private String itemcode;
     private String itemname;
     private String itemdetail;
-    private int  price;
+    private int price;
     private String imagedata;
 }

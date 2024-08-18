@@ -47,6 +47,7 @@ public class ItemService {
                         (String) t.get("itemcode"),
                         (String) t.get("itemname"),
                         (String) t.get("itemtype"),
+                        (int) t.get("price"),
                         (int) t.get("balance")))
                 .collect(Collectors.toList());
     }
@@ -134,13 +135,13 @@ public class ItemService {
     }
 
     public ECBItemfilterbycodedto getAllItemByItemCode(String itemcode){
-        Map<String, Object> results = itemRepository.getAllItemByItemCode();
+        Map<String, Object> results = itemRepository.getAllItemByItemCode(itemcode);
         ECBItemfilterbycodedto ecbOBJ = new ECBItemfilterbycodedto();
         return ecbOBJ.mapForObject(results);
     }
 
     public ECBItemcodenpricedto getAllItemByItemCodenPrice(String itemcode){
-        Map<String, Object> results = itemRepository.getAllItemByItemCode();
+        Map<String, Object> results = itemRepository.getAllItemByItemCode(itemcode);
         ECBItemcodenpricedto ecbOBJ = new ECBItemcodenpricedto();
         return ecbOBJ.mapForObject(results);
     }
