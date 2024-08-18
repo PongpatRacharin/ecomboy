@@ -122,10 +122,12 @@ class LoginPage extends StatelessWidget {
                               var results =
                                   await value.loginAction(username, password);
                               if (results['message'] == 'success') {
+                                // get user infomation
+                                await value.getUserByUserNameAction(username);
                                 // store permission to local cookie
                                 String permission =
                                     results['data']['permission'];
-                                await value.storePermission(permission);
+                                await value.storeData(username, permission);
                                 switch (permission) {
                                   case 'ADM':
                                     Navigator.push(

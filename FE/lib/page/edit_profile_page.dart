@@ -1,20 +1,45 @@
-import 'package:ecomboy/component/menu_button.dart';
+import 'dart:convert';
+
 import 'package:ecomboy/component/menu_component.dart';
 import 'package:ecomboy/component/side_drawer.dart';
-import 'package:ecomboy/component/table.dart';
 import 'package:ecomboy/component/top_app_bar.dart';
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
-import 'package:ecomboy/page/item_faq_page.dart';
 import 'package:ecomboy/page/landing_page.dart';
-import 'package:ecomboy/page/order_item_page.dart';
-import 'package:ecomboy/page/register_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class EditProfilePage extends StatelessWidget {
+class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
+
+  @override
+  State<EditProfilePage> createState() => _EditProfilePageState();
+}
+
+class _EditProfilePageState extends State<EditProfilePage> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController snameController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController telController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  Future<void> initData() async {
+    final inventory = Provider.of<InventoryProvider>(context, listen: false);
+    await inventory.getUserByUserNameAction(inventory.username);
+    if (inventory.userByUserName.isNotEmpty) {
+      nameController.text = inventory.userByUserName['name'] ?? '';
+      snameController.text = inventory.userByUserName['sname'] ?? '';
+      addressController.text = inventory.userByUserName['address'] ?? '';
+      telController.text = inventory.userByUserName['tel'] ?? '';
+      emailController.text = inventory.userByUserName['email'] ?? '';
+    }
+    inventory.triggerUpdate();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +107,7 @@ class EditProfilePage extends StatelessWidget {
                                         width: 200,
                                         color: Colors.white,
                                         child: TextField(
+                                          controller: nameController,
                                           decoration: InputDecoration(
                                               contentPadding: EdgeInsets.all(8),
                                               border: OutlineInputBorder()),
@@ -107,6 +133,7 @@ class EditProfilePage extends StatelessWidget {
                                         width: 206,
                                         color: Colors.white,
                                         child: TextField(
+                                          controller: snameController,
                                           decoration: InputDecoration(
                                               contentPadding: EdgeInsets.all(8),
                                               border: OutlineInputBorder()),
@@ -136,6 +163,7 @@ class EditProfilePage extends StatelessWidget {
                                     width: 500,
                                     color: Colors.white,
                                     child: TextField(
+                                      controller: telController,
                                       decoration: InputDecoration(
                                           contentPadding: EdgeInsets.all(8),
                                           border: OutlineInputBorder()),
@@ -163,6 +191,7 @@ class EditProfilePage extends StatelessWidget {
                                     width: 500,
                                     color: Colors.white,
                                     child: TextField(
+                                      controller: addressController,
                                       maxLines: 10,
                                       minLines: 6,
                                       decoration: InputDecoration(
@@ -179,10 +208,23 @@ class EditProfilePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               GestureDetector(
-                                onTap: () {
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //     builder: (context) =>
-                                  //         const ItemQuestionPage()));
+                                onTap: () async {
+                                  Map<String, dynamic> data = {
+                                    'userid': value.userByUserName['userid'],
+                                    'name': nameController.text,
+                                    'sname': snameController.text,
+                                    'address': addressController.text,
+                                    'tel': telController.text,
+                                  };
+                                  debugPrint(jsonEncode(data));
+                                  // var res =
+                                  //     await value.updateUserDataAction(data);
+                                  // if (res == 'success') {
+                                  //   Navigator.of(context).pushReplacement(
+                                  //       MaterialPageRoute(
+                                  //           builder: (context) =>
+                                  //               const LandingPage()));
+                                  // }
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(

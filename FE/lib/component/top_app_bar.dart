@@ -42,7 +42,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                         color: const Color.fromARGB(255, 17, 141, 23)),
                     child: Center(
                       child: Text(
-                        'User Name',
+                        '${value.username}',
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
@@ -52,7 +52,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                 GestureDetector(
                   onTap: () async {
                     // remove sharedpref and push to login page
-                    await value.clearPermission();
+                    await value.clearStoreData();
                     Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (context) => LoginPage()));
                   },

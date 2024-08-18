@@ -1,6 +1,7 @@
 import 'package:ecomboy/component/side_drawer.dart';
 import 'package:ecomboy/component/top_app_bar.dart';
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
+import 'package:ecomboy/page/sell_record_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,8 @@ class OrderItemPage extends StatelessWidget {
                           children: [
                             SmallProductIconWidget(),
                             const SizedBox(width: 32),
-                            Text("${value.commonTrans['productName']}",
+                            Text(
+                                "${value.commonTrans['productName']} ${value.itemByCode['itemname']}",
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold))
                           ],
@@ -49,7 +51,7 @@ class OrderItemPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                                "${value.commonTrans['productPrice']} placeholder price",
+                                "${value.commonTrans['productPrice']} ${value.itemByCode['price']}",
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold)),
                             const SizedBox(width: 16),
@@ -101,7 +103,20 @@ class OrderItemPage extends StatelessWidget {
                               ),
                               const SizedBox(width: 16),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () async {
+                                  // make order
+                                  Map<String, dynamic> data = {
+                                    'userid': value.userByUserName['userid'],
+                                    'itemcode': value.itemByCode['itemcode']
+                                  };
+                                  var res = await value.makeOrderAction(data);
+                                  if (res == 'success') {
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SellRecordPage()));
+                                  }
+                                },
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 16, vertical: 8),
@@ -165,7 +180,12 @@ class DeliveryAddress extends StatelessWidget {
           children: [
             Text("${value.commonTrans['deliveryAddress']}",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            Text("address here",
+            Text(
+                "ชื่อ: ${value.userByUserName['name']} ${value.userByUserName['sname']}",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Text("ที่อยู่: ${value.userByUserName['address']}",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Text("เบอร์ติดต่อ: ${value.userByUserName['tel']}",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           ],
         ),

@@ -21,11 +21,18 @@ class _UserListPageState extends State<UserListPage> {
   void initState() {
     super.initState();
     final inventory = Provider.of<InventoryProvider>(context, listen: false);
+    initData();
 
     // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
     //   await inventory.getUserAction();
     //   inventory.triggerUpdate();
     // });
+  }
+
+  Future<void> initData() async {
+    final inventory = Provider.of<InventoryProvider>(context, listen: false);
+    await inventory.getUserAction();
+    inventory.triggerUpdate();
   }
 
   @override
@@ -147,7 +154,10 @@ class _UserListPageState extends State<UserListPage> {
                   onTap: () async {
                     bool? results = await ConfirmDialog.show(context);
                     if (results == true) {
+                      // delete
                       debugPrint('delete confirm');
+                      await value.deleteUserAction(data['userid']);
+                      await initData();
                     } else {
                       debugPrint('cancel');
                     }

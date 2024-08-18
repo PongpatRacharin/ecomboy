@@ -53,7 +53,9 @@ class LeftDrawer extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: ((context) => ItemDetailPage())));
+                              builder: ((context) => ItemDetailPage(
+                                    itemcode: '',
+                                  ))));
                     },
                     child: Container(
                       height: 30,
@@ -245,48 +247,48 @@ class LeftDrawer extends StatelessWidget {
                       child: Center(child: Text("product list page")),
                     ),
                   ),
-                  // add product
-                  const SizedBox(height: 16),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) => AddEditProductPage(
-                                    type: 'add',
-                                  ))));
-                    },
-                    child: Container(
-                      height: 30,
-                      width: 250,
-                      decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: Colors.black)),
-                      child: Center(child: Text("add product")),
-                    ),
-                  ),
-                  // edit product
-                  const SizedBox(height: 16),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) => AddEditProductPage(
-                                    type: 'edit',
-                                  ))));
-                    },
-                    child: Container(
-                      height: 30,
-                      width: 250,
-                      decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: Colors.black)),
-                      child: Center(child: Text("edit product")),
-                    ),
-                  ),
+                  // // add product
+                  // const SizedBox(height: 16),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: ((context) => AddEditProductPage(
+                  //                   type: 'add',
+                  //                 ))));
+                  //   },
+                  //   child: Container(
+                  //     height: 30,
+                  //     width: 250,
+                  //     decoration: BoxDecoration(
+                  //         color: Colors.blue,
+                  //         borderRadius: BorderRadius.circular(5),
+                  //         border: Border.all(color: Colors.black)),
+                  //     child: Center(child: Text("add product")),
+                  //   ),
+                  // ),
+                  // // edit product
+                  // const SizedBox(height: 16),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: ((context) => AddEditProductPage(
+                  //                   type: 'edit',
+                  //                 ))));
+                  //   },
+                  //   child: Container(
+                  //     height: 30,
+                  //     width: 250,
+                  //     decoration: BoxDecoration(
+                  //         color: Colors.blue,
+                  //         borderRadius: BorderRadius.circular(5),
+                  //         border: Border.all(color: Colors.black)),
+                  //     child: Center(child: Text("edit product")),
+                  //   ),
+                  // ),
                 ],
               )
             ],

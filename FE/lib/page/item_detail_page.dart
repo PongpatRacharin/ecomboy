@@ -1,20 +1,32 @@
-import 'package:ecomboy/component/menu_button.dart';
 import 'package:ecomboy/component/menu_component.dart';
 import 'package:ecomboy/component/side_drawer.dart';
-import 'package:ecomboy/component/table.dart';
 import 'package:ecomboy/component/top_app_bar.dart';
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
 import 'package:ecomboy/page/item_faq_page.dart';
-import 'package:ecomboy/page/landing_page.dart';
 import 'package:ecomboy/page/order_item_page.dart';
-import 'package:ecomboy/page/register_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class ItemDetailPage extends StatelessWidget {
-  const ItemDetailPage({super.key});
+class ItemDetailPage extends StatefulWidget {
+  final String itemcode;
+  const ItemDetailPage({super.key, required this.itemcode});
+
+  @override
+  State<ItemDetailPage> createState() => _ItemDetailPageState();
+}
+
+class _ItemDetailPageState extends State<ItemDetailPage> {
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  Future<void> initData() async {
+    final inventory = Provider.of<InventoryProvider>(context, listen: false);
+    await inventory.getItemByCodeAction(widget.itemcode);
+    inventory.triggerUpdate();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +51,7 @@ class ItemDetailPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -50,14 +62,14 @@ class ItemDetailPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "ชื่อสินค้า: ",
+                                    "ชื่อสินค้า: ${value.itemByCode['itemname']}",
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   SizedBox(height: 16),
                                   Text(
-                                    "ราคา: ",
+                                    "ราคา: ${value.itemByCode['itemprice']}",
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold),
@@ -71,7 +83,7 @@ class ItemDetailPage extends StatelessWidget {
                                   ),
                                   SizedBox(height: 8),
                                   Text(
-                                    'dummy',
+                                    '${value.itemByCode['itemdetail']}',
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold),

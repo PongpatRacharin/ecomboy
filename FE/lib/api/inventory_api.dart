@@ -7,7 +7,7 @@ class InventoryAPI {
     receiveTimeout: const Duration(milliseconds: 600),
     sendTimeout: const Duration(milliseconds: 600),
   ));
-  final endPoint = "localhost:8080";
+  final endPoint = "http://localhost:8080";
 
   Future postmanTemplate(header) async {
     String _tag = "postmanTemplate";
@@ -47,7 +47,7 @@ class InventoryAPI {
       final res = await dio.get('$endPoint/v1/login/user/getuser');
       return res.data;
     } catch (e) {
-      debugPrint('$e');
+      debugPrint('$_tag: $e');
     }
   }
 
@@ -76,7 +76,7 @@ class InventoryAPI {
   Future updateUserApi(Map<String, dynamic> data) async {
     String _tag = "updateUserApi";
     try {
-      final res = await dio.get('$endPoint/v1/login/user/update', data: data);
+      final res = await dio.post('$endPoint/v1/login/user/update', data: data);
       return res.data;
     } catch (e) {
       debugPrint('$e');
@@ -106,7 +106,7 @@ class InventoryAPI {
   Future addItemApi(Map<String, dynamic> data) async {
     String _tag = "addItemApi";
     try {
-      final res = await dio.post('$endPoint/v1/item/stock/additem');
+      final res = await dio.post('$endPoint/v1/item/stock/additem', data: data);
       return res.data;
     } catch (e) {
       debugPrint('$e');
@@ -116,7 +116,7 @@ class InventoryAPI {
   Future getItemByCodeApi(itemcode) async {
     String _tag = "getItemByCodeApi";
     try {
-      final res = await dio.post('$endPoint/v1/item/stock/getitembycode',
+      final res = await dio.get('$endPoint/v1/item/stock/getitembycode',
           queryParameters: {'itemcode': itemcode});
       return res.data;
     } catch (e) {
@@ -127,7 +127,8 @@ class InventoryAPI {
   Future updateItemApi(Map<String, dynamic> data) async {
     String _tag = "updateItemApi";
     try {
-      final res = await dio.post('$endPoint/v1/item/stock/updateitem');
+      final res =
+          await dio.post('$endPoint/v1/item/stock/updateitem', data: data);
       return res.data;
     } catch (e) {
       debugPrint('$e');
@@ -148,7 +149,7 @@ class InventoryAPI {
   Future getBestSellApi() async {
     String _tag = "getBestSellApi";
     try {
-      final res = await dio.get('$endPoint/v1/item/stock/bestsell');
+      final res = await dio.get('$endPoint/v1/item/stock/getbestsell');
       return res.data;
     } catch (e) {
       debugPrint('$e');
@@ -166,7 +167,7 @@ class InventoryAPI {
     }
   }
 
-  Future getBestSellNoApi(bestsellno) async {
+  Future removeBestSellNoApi(bestsellno) async {
     String _tag = "getBestSellNoApi";
     try {
       final res = await dio.get('$endPoint/v1/item/stock/bestsellno',
@@ -191,6 +192,48 @@ class InventoryAPI {
     String _tag = "getFaqApi";
     try {
       final res = await dio.get('$endPoint/v1/item/faq/getfaq');
+      return res.data;
+    } catch (e) {
+      debugPrint('$e');
+    }
+  }
+
+  Future addQuestionApi(Map<String, dynamic> data) async {
+    String _tag = "getFaqApi";
+    try {
+      final res =
+          await dio.post('$endPoint/v1/item/faq/addquestion', data: data);
+      return res.data;
+    } catch (e) {
+      debugPrint('$e');
+    }
+  }
+
+  Future getLandingBestSellApi() async {
+    String _tag = "getLandingBestSell";
+    try {
+      final res = await dio.get('$endPoint/v1/landing/item/getbestsell');
+      return res.data;
+    } catch (e) {
+      debugPrint('$e');
+    }
+  }
+
+  Future getLandingItemApi() async {
+    String _tag = "getLandingItem";
+    try {
+      final res = await dio.get('$endPoint/v1/landing/item/getitem');
+      return res.data;
+    } catch (e) {
+      debugPrint('$e');
+    }
+  }
+
+  Future makeOrderApi(Map<String, dynamic> data) async {
+    String _tag = "makeOrderApi";
+    try {
+      final res =
+          await dio.post('$endPoint/v1/item/stock/orderitem', data: data);
       return res.data;
     } catch (e) {
       debugPrint('$e');

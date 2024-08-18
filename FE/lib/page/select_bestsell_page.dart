@@ -7,14 +7,14 @@ import 'package:ecomboy/page/add_or_edit_product_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ProductListPage extends StatefulWidget {
-  const ProductListPage({super.key});
+class SelectBestSell extends StatefulWidget {
+  const SelectBestSell({super.key});
 
   @override
-  State<ProductListPage> createState() => _ProductListPageState();
+  State<SelectBestSell> createState() => _SelectBestSellState();
 }
 
-class _ProductListPageState extends State<ProductListPage> {
+class _SelectBestSellState extends State<SelectBestSell> {
   @override
   void initState() {
     super.initState();
@@ -62,7 +62,7 @@ class _ProductListPageState extends State<ProductListPage> {
           // product name
           DataColumn(
             label: Container(
-              width: percentWidth(0.2),
+              width: percentWidth(0.25),
               child: Text(
                 '${value.commonTrans['tableProductName']}',
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -109,16 +109,6 @@ class _ProductListPageState extends State<ProductListPage> {
               ),
             ),
           ),
-          // delete
-          DataColumn(
-            label: Container(
-              width: percentWidth(0.1),
-              child: Text(
-                '${value.commonTrans['tableProductListDelete']}',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
         ];
       }
 
@@ -137,34 +127,11 @@ class _ProductListPageState extends State<ProductListPage> {
                 DataCell(Text(data['itemtype'] ?? '')),
                 DataCell(Text(data['balance'].toString() ?? '')),
                 DataCell(GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AddEditProductPage(
-                              type: 'edit',
-                              itemcode: data['itemcode'],
-                            )));
-                  },
-                  child: Container(
-                    height: 36,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Color.fromARGB(255, 3, 192, 59)),
-                    child: Center(
-                      child: Text(
-                        "${value.commonTrans['tableEdit']}",
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                )),
-                DataCell(GestureDetector(
                   onTap: () async {
                     bool? results = await ConfirmDialog.show(context);
                     if (results == true) {
-                      // delete
-                      await value.deleteItemAction(data['itemcode']);
+                      // select best sell
+                      await value.addBestSellAction(data['itemcode']);
                       await initData();
                     } else {
                       debugPrint('cancel');
@@ -176,10 +143,10 @@ class _ProductListPageState extends State<ProductListPage> {
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Color.fromARGB(255, 192, 3, 3)),
+                        color: Color.fromARGB(255, 3, 192, 59)),
                     child: Center(
                       child: Text(
-                        "${value.commonTrans['tableDelete']}",
+                        "${value.commonTrans['tableSelect']}",
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
@@ -191,7 +158,6 @@ class _ProductListPageState extends State<ProductListPage> {
             // add an empty rows
             rows.add(
               DataRow(cells: <DataCell>[
-                DataCell(Text('')),
                 DataCell(Text('')),
                 DataCell(Text('')),
                 DataCell(Text('')),

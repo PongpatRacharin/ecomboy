@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:ecomboy/component/function/common_function.dart';
 import 'package:ecomboy/component/menu_component.dart';
 import 'package:ecomboy/component/side_drawer.dart';
 import 'package:ecomboy/component/top_app_bar.dart';
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
+import 'package:ecomboy/page/user_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +21,7 @@ class AddEditMemberPage extends StatefulWidget {
 
 class _AddEditMemberPageState extends State<AddEditMemberPage> {
   int selectedRole = 1;
+
   final TextEditingController memberIdController = TextEditingController();
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -27,16 +30,36 @@ class _AddEditMemberPageState extends State<AddEditMemberPage> {
   final TextEditingController addressController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  Future<void> initData() async {
+    final inventory = Provider.of<InventoryProvider>(context, listen: false);
+    if (widget.username != '') {
+      //get data
+      await inventory.getUserByUserNameAction(widget.username);
+      if (inventory.userByUserName.isNotEmpty) {
+        memberIdController.text = inventory.userByUserName['userid'] ?? '';
+        userNameController.text = inventory.userByUserName['username'] ?? '';
+        passwordController.text = inventory.userByUserName['password'] ?? '';
+        firstNameController.text = inventory.userByUserName['name'] ?? '';
+        lastNameController.text = inventory.userByUserName['sname'] ?? '';
+        addressController.text = inventory.userByUserName['address'] ?? '';
+        phoneNumberController.text = inventory.userByUserName['tel'] ?? '';
+        emailController.text = inventory.userByUserName['email'] ?? '';
+        selectedRole =
+            radioMapFromString(inventory.userByUserName['permission']);
+      }
+      inventory.triggerUpdate();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final double totalWidth = MediaQuery.of(context).size.width;
-
-    double percentWidth(double percent) {
-      double ret;
-      ret = (totalWidth - 420 - 64) * percent;
-      return ret;
-    }
-
     bool isAdd = true;
     if (widget.type == 'add') {
       isAdd = true;
@@ -115,6 +138,7 @@ class _AddEditMemberPageState extends State<AddEditMemberPage> {
                                 width: 200,
                                 color: Colors.white,
                                 child: TextField(
+                                  enabled: widget.type == 'add' ? true : false,
                                   controller: memberIdController,
                                   decoration: InputDecoration(
                                       contentPadding: EdgeInsets.all(8),
@@ -401,22 +425,31 @@ class _AddEditMemberPageState extends State<AddEditMemberPage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   //get textbox value
                                   Map<String, dynamic> data = {
-                                    'type': widget.type,
-                                    'memberId': memberIdController.text,
+                                    'userid': memberIdController.text,
                                     'username': userNameController.text,
                                     'password': passwordController.text,
-                                    'firstName': firstNameController.text,
-                                    'lastName': lastNameController.text,
+                                    'name': firstNameController.text,
+                                    'sname': lastNameController.text,
                                     'address': addressController.text,
-                                    'phoneNumber': phoneNumberController.text,
+                                    'tel': phoneNumberController.text,
                                     'email': emailController.text,
-                                    'role': selectedRole
+                                    'permission': radioMapToString(selectedRole)
                                   };
-
                                   debugPrint('${jsonEncode(data)}');
+                                  if (widget.type == 'add') {
+                                    //create
+                                    await value.createUserDataAction(data);
+                                  } else if (widget.type == 'edit') {
+                                    //update
+                                    await value.updateUserDataAction(data);
+                                  }
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              UserListPage()));
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(

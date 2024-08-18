@@ -4,17 +4,18 @@ import 'package:ecomboy/component/side_drawer.dart';
 import 'package:ecomboy/component/top_app_bar.dart';
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
 import 'package:ecomboy/page/add_or_edit_product_page.dart';
+import 'package:ecomboy/page/select_bestsell_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ProductListPage extends StatefulWidget {
-  const ProductListPage({super.key});
+class BestSellPage extends StatefulWidget {
+  const BestSellPage({super.key});
 
   @override
-  State<ProductListPage> createState() => _ProductListPageState();
+  State<BestSellPage> createState() => _BestSellPageState();
 }
 
-class _ProductListPageState extends State<ProductListPage> {
+class _BestSellPageState extends State<BestSellPage> {
   @override
   void initState() {
     super.initState();
@@ -25,7 +26,7 @@ class _ProductListPageState extends State<ProductListPage> {
 
   Future<void> initData() async {
     final inventory = Provider.of<InventoryProvider>(context, listen: false);
-    await inventory.getItemListAction();
+    await inventory.getBestSellAction();
     inventory.triggerUpdate();
   }
 
@@ -69,16 +70,7 @@ class _ProductListPageState extends State<ProductListPage> {
               ),
             ),
           ),
-          // product price
-          DataColumn(
-            label: Container(
-              width: percentWidth(0.1),
-              child: Text(
-                '${value.commonTrans['tableProductListPrice']}',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
+
           // product type
           DataColumn(
             label: Container(
@@ -95,16 +87,6 @@ class _ProductListPageState extends State<ProductListPage> {
               width: percentWidth(0.2),
               child: Text(
                 '${value.commonTrans['tableProductListStock']}',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-          // edit
-          DataColumn(
-            label: Container(
-              width: percentWidth(0.1),
-              child: Text(
-                '${value.commonTrans['tableProductListEdit']}',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
@@ -133,38 +115,14 @@ class _ProductListPageState extends State<ProductListPage> {
               DataRow(cells: <DataCell>[
                 DataCell(Text(data['itemcode'] ?? '')),
                 DataCell(Text(data['itemname'] ?? '')),
-                DataCell(Text(data['itemprice'] ?? '')),
                 DataCell(Text(data['itemtype'] ?? '')),
                 DataCell(Text(data['balance'].toString() ?? '')),
-                DataCell(GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AddEditProductPage(
-                              type: 'edit',
-                              itemcode: data['itemcode'],
-                            )));
-                  },
-                  child: Container(
-                    height: 36,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Color.fromARGB(255, 3, 192, 59)),
-                    child: Center(
-                      child: Text(
-                        "${value.commonTrans['tableEdit']}",
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                )),
                 DataCell(GestureDetector(
                   onTap: () async {
                     bool? results = await ConfirmDialog.show(context);
                     if (results == true) {
                       // delete
-                      await value.deleteItemAction(data['itemcode']);
+                      await value.removeBestSellAction(data['bestsellno']);
                       await initData();
                     } else {
                       debugPrint('cancel');
@@ -191,8 +149,6 @@ class _ProductListPageState extends State<ProductListPage> {
             // add an empty rows
             rows.add(
               DataRow(cells: <DataCell>[
-                DataCell(Text('')),
-                DataCell(Text('')),
                 DataCell(Text('')),
                 DataCell(Text('')),
                 DataCell(Text('')),
@@ -241,7 +197,7 @@ class _ProductListPageState extends State<ProductListPage> {
                             border:
                                 TableBorder.all(width: 1, color: Colors.black),
                             columns: _getColumn(),
-                            rows: _getRow(value.itemList)),
+                            rows: _getRow(value.bestSell)),
                         const SizedBox(
                           height: 35,
                         ),
@@ -252,8 +208,7 @@ class _ProductListPageState extends State<ProductListPage> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => AddEditProductPage(
-                                        type: 'add', itemcode: '')));
+                                    builder: (context) => SelectBestSell()));
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(

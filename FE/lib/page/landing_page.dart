@@ -1,14 +1,36 @@
+import 'dart:convert';
+
 import 'package:ecomboy/component/side_drawer.dart';
 import 'package:ecomboy/component/top_app_bar.dart';
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
 import 'package:ecomboy/page/item_detail_page.dart';
-import 'package:ecomboy/page/register_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class LandingPage extends StatelessWidget {
+class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
+
+  @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        initData();
+      },
+    );
+  }
+
+  Future<void> initData() async {
+    final inventory = Provider.of<InventoryProvider>(context, listen: false);
+    await inventory.getLandingBestSellAction();
+    await inventory.getLandingItemAction();
+    inventory.triggerUpdate();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +51,9 @@ class LandingPage extends StatelessWidget {
                 children: [
                   const SizedBox(height: 8),
                   // best sell
-                  BestSellProduct(),
+                  BestSellProduct(
+                    data: value.landingBestSell,
+                  ),
                   const SizedBox(height: 16),
                   Container(
                     height: 4,
@@ -38,7 +62,9 @@ class LandingPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   // normal sell
-                  NormalSellProduct(),
+                  NormalSellProduct(
+                    data: value.landingItem,
+                  ),
                 ],
               ),
             ),
@@ -48,10 +74,35 @@ class LandingPage extends StatelessWidget {
 }
 
 class BestSellProduct extends StatelessWidget {
-  const BestSellProduct({super.key});
+  final List<Map<String, dynamic>> data;
+  const BestSellProduct({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> rows = [];
+    List<Widget> currentRow = [];
+    debugPrint(jsonEncode(data));
+
+    for (int i = 0; i < data.length; i++) {
+      currentRow.add(ProductIconWidget(
+        data: data[i],
+      ));
+
+      if ((i + 1) % 5 == 0 || i == data.length - 1) {
+        rows.add(Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: currentRow,
+        ));
+
+        if (i != data.length - 1) {
+          rows.add(const SizedBox(height: 8));
+        }
+
+        currentRow = [];
+      }
+    }
+
     return Consumer<InventoryProvider>(builder: (context, value, child) {
       return Container(
         child: Column(
@@ -67,18 +118,10 @@ class BestSellProduct extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 310),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ProductIconWidget(productName: 'test1'),
-                  ProductIconWidget(productName: 'test2'),
-                  ProductIconWidget(productName: 'test3'),
-                  ProductIconWidget(productName: 'test4'),
-                  ProductIconWidget(productName: 'test5'),
-                ],
+              child: Column(
+                children: rows,
               ),
             )
           ],
@@ -89,10 +132,35 @@ class BestSellProduct extends StatelessWidget {
 }
 
 class NormalSellProduct extends StatelessWidget {
-  const NormalSellProduct({super.key});
+  final List<Map<String, dynamic>> data;
+  const NormalSellProduct({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> rows = [];
+    List<Widget> currentRow = [];
+    debugPrint(jsonEncode(data));
+
+    for (int i = 0; i < data.length; i++) {
+      currentRow.add(ProductIconWidget(
+        data: data[i],
+      ));
+
+      if ((i + 1) % 5 == 0 || i == data.length - 1) {
+        rows.add(Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: currentRow,
+        ));
+
+        if (i != data.length - 1) {
+          rows.add(const SizedBox(height: 8));
+        }
+
+        currentRow = [];
+      }
+    }
+
     return Consumer<InventoryProvider>(builder: (context, value, child) {
       return Container(
         child: Column(
@@ -108,34 +176,10 @@ class NormalSellProduct extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 310),
               child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ProductIconWidget(productName: 'test1'),
-                      ProductIconWidget(productName: 'test2'),
-                      ProductIconWidget(productName: 'test3'),
-                      ProductIconWidget(productName: 'test4'),
-                      ProductIconWidget(productName: 'test5'),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ProductIconWidget(productName: 'test6'),
-                      ProductIconWidget(productName: 'test7'),
-                      ProductIconWidget(productName: 'test8'),
-                      ProductIconWidget(productName: 'test9'),
-                      ProductIconWidget(productName: 'test10'),
-                    ],
-                  ),
-                ],
+                children: rows,
               ),
             )
           ],
@@ -146,17 +190,17 @@ class NormalSellProduct extends StatelessWidget {
 }
 
 class ProductIconWidget extends StatelessWidget {
-  final String productName;
-  final String picturePath;
-  const ProductIconWidget(
-      {super.key, required this.productName, this.picturePath = ""});
+  final Map<String, dynamic> data;
+  const ProductIconWidget({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const ItemDetailPage()));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ItemDetailPage(
+                  itemcode: data['itemcode'] ?? '',
+                )));
       },
       child: Container(
         width: 110,
@@ -176,7 +220,7 @@ class ProductIconWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Text(productName)
+                Text(data['itemname'])
               ],
             ),
           ),

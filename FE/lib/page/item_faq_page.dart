@@ -1,22 +1,32 @@
 import 'dart:convert';
 
-import 'package:ecomboy/component/menu_button.dart';
 import 'package:ecomboy/component/menu_component.dart';
 import 'package:ecomboy/component/side_drawer.dart';
-import 'package:ecomboy/component/table.dart';
 import 'package:ecomboy/component/top_app_bar.dart';
 import 'package:ecomboy/inventoryProvider/inventory_provider.dart';
-import 'package:ecomboy/page/landing_page.dart';
-import 'package:ecomboy/page/order_item_page.dart';
-import 'package:ecomboy/page/register_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class ItemQuestionPage extends StatelessWidget {
+class ItemQuestionPage extends StatefulWidget {
   ItemQuestionPage({super.key});
+
+  @override
+  State<ItemQuestionPage> createState() => _ItemQuestionPageState();
+}
+
+class _ItemQuestionPageState extends State<ItemQuestionPage> {
   final TextEditingController questionController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  Future<void> initData() async {
+    final inventory = Provider.of<InventoryProvider>(context, listen: false);
+    await inventory.getItemFaqAction();
+    inventory.triggerUpdate();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +46,41 @@ class ItemQuestionPage extends StatelessWidget {
                     child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 64),
+                          horizontal: 16, vertical: 32),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          value.permission != "MEM"
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        const SizedBox(width: 32),
+                                        Text(
+                                          '${value.commonTrans['customerFaqTitle']}',
+                                          style: TextStyle(
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Container(
+                                      height: 2,
+                                      width: double.infinity,
+                                      color: Color.fromARGB(255, 80, 80, 79),
+                                    ),
+                                    const SizedBox(height: 16),
+                                  ],
+                                )
+                              : const SizedBox.shrink(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,36 +146,19 @@ class ItemQuestionPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              // GestureDetector(
-                              //   onTap: () {
-                              //     Navigator.of(context).push(MaterialPageRoute(
-                              //         builder: (context) =>
-                              //             const OrderItemPage()));
-                              //   },
-                              //   child: Container(
-                              //     padding: EdgeInsets.symmetric(
-                              //         horizontal: 16, vertical: 8),
-                              //     decoration: BoxDecoration(
-                              //         borderRadius: BorderRadius.circular(5),
-                              //         color: const Color.fromARGB(
-                              //             255, 26, 13, 219)),
-                              //     child: Center(
-                              //       child: Text(
-                              //         "${value.commonTrans['makeOrderButton']}",
-                              //         style:
-                              //             const TextStyle(color: Colors.white),
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                              // const SizedBox(width: 16),
                               GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   Map<String, dynamic> data = {
                                     'question': questionController.text
                                   };
+                                  if (value.itemFaq.containsKey('qnaid')) {
+                                    data['qnaid'] = value.itemFaq['qnaid'];
+                                  }
+
                                   debugPrint('${jsonEncode(data)}');
                                   // send question to BE
+                                  value.addQuestionAction(data);
+
                                   Navigator.of(context).pop(true);
                                 },
                                 child: Container(
@@ -147,7 +170,9 @@ class ItemQuestionPage extends StatelessWidget {
                                           255, 103, 181, 255)),
                                   child: Center(
                                     child: Text(
-                                      "${value.commonTrans['fnqButton']}",
+                                      value.permission != 'MEM'
+                                          ? "${value.commonTrans['customerFaqReply']}"
+                                          : "${value.commonTrans['fnqButton']}",
                                       style:
                                           const TextStyle(color: Colors.white),
                                     ),
